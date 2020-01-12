@@ -31,7 +31,7 @@ void Profile::mark(string markerMsg)
 void Profile::elapse()
 {
     out = microtime();
-    std::cout << "++++ Profile " << msg << " : " << out - in << "s" << std::endl;
+    std::cout << "+  Profile " << msg << " : " << out - in << "s" << std::endl;
 }
 
 /**

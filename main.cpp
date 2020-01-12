@@ -7,29 +7,15 @@
 using namespace std;
 
 /**
- * @brief time profiler
+ * @brief populate list
  * 
- * @return double 
+ * @param item 
+ * @param list 
  */
-double microtime()
+void populateList(Item &item, Liste &list)
 {
-    return (double(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) / double(1000000));
-}
-
-/**
- * @brief illustrate list manipulation as min max sort
- * g++ -g -std=c++11 -o testptr test-ptr.cpp
- * 
- * @return int 
- */
-int main()
-{
-    Profile profiler;
-    Liste list;
-    Item item;
-
-    profiler.mark("generation");
-    std::cout << "**** start generation" << std::endl;
+    std::cout << std::endl
+              << "> start generation" << std::endl;
     int itemAmount = 1000000;
     for (int i = 0; i < itemAmount; i++)
     {
@@ -40,52 +26,138 @@ int main()
         item.value = rand() % 100; // 0..100
         list.appendItem(item);
     }
-    std::cout << "Liste size : " << list.getSize() << std::endl;
-    profiler.elapse();
+    std::cout << "> Liste size : " << list.getSize() << std::endl;
+}
 
+/**
+ * @brief append a single item to the list
+ * 
+ * @param item 
+ * @param list 
+ */
+void appendItem(Item &item, Liste &list)
+{
     item.index = 1000;
     item.value = 0;
     item.timestamp = "3020-20-20";
     list.appendItem(item);
-    std::cout << "**** after append" << std::endl;
-    std::cout << "Liste size : " << list.getSize() << std::endl;
+    std::cout << "> after append" << std::endl;
+    std::cout << "> Liste size : " << list.getSize() << std::endl;
+}
 
-    std::cout << "**** start sorting" << std::endl;
-
-    profiler.mark("sort index");
-    std::cout << "**** start sort index" << std::endl;
+/**
+ * @brief sort by index order desc
+ * 
+ * @param list 
+ */
+void sortByIndex(Liste &list)
+{
+    std::cout << std::endl
+              << "> start sort index" << std::endl;
     list.setOrder(Liste::DESC);
     list.sortByIndex();
     list.displayAt(0);
+}
+
+/**
+ * @brief sort by port order asc
+ * 
+ * @param list 
+ */
+void sortByPort(Liste &list)
+{
+    std::cout << "> start sort port" << std::endl;
+    list.setOrder(Liste::ASC);
+    list.sortByPort();
+    list.displayAt(0);
+}
+
+/**
+ * @brief sort by value order asc
+ * 
+ * @param list 
+ */
+void sortByValue(Liste &list)
+{
+    std::cout << "> start sort value" << std::endl;
+    list.setOrder(Liste::ASC);
+    list.sortByValue();
+    list.displayAt(0);
+}
+
+/**
+ * @brief display minima for index,port,value
+ * 
+ * @param list 
+ */
+void minima(Liste &list)
+{
+    std::cout << "min index " << list.getMinIndex() << std::endl;
+    std::cout << "min port " << list.getMinPort() << std::endl;
+    std::cout << "min value " << list.getMinValue() << std::endl;
+}
+
+/**
+ * @brief display maxima for index,port,value
+ * 
+ * @param list 
+ */
+void maxima(Liste &list)
+{
+    std::cout << "max index " << list.getMaxIndex() << std::endl;
+    std::cout << "max port " << list.getMaxPort() << std::endl;
+    std::cout << "max value " << list.getMaxValue() << std::endl;
+}
+
+/**
+ * @brief illustrate list manipulation as min max sort
+ * 
+ * @return int 
+ */
+int main()
+{
+    Profile profiler;
+    Liste list;
+    Item item;
+
+    profiler.mark("generation");
+    populateList(item, list);
+    profiler.elapse();
+
+    profiler.mark("append item");
+    appendItem(item, list);
+    profiler.elapse();
+
+    std::cout << std::endl
+              << "> start sorting" << std::endl
+              << std::endl;
+
+    profiler.mark("sort index");
+    sortByIndex(list);
     profiler.elapse();
 
     profiler.mark("sort port");
-    std::cout << "**** start sort port" << std::endl;
-    list.setOrder(Liste::ASC);
-    double profPort = microtime();
-    list.sortByPort();
-    list.displayAt(0);
+    sortByPort(list);
     profiler.elapse();
 
     profiler.mark("sort value");
-    std::cout << "**** start sort value" << std::endl;
-    list.setOrder(Liste::DESC);
-    list.sortByValue();
-    list.displayAt(0);
+    sortByValue(list);
     profiler.elapse();
 
+    std::cout << std::endl
+              << "> start minima" << std::endl
+              << std::endl;
     profiler.mark("minima");
-    std::cout << "**** start sort value" << std::endl;
-    std::cout << "**** min index " << list.getMinIndex() << std::endl;
-    std::cout << "**** min port " << list.getMinPort() << std::endl;
-    std::cout << "**** min value " << list.getMinValue() << std::endl;
+    minima(list);
     profiler.elapse();
 
+    std::cout << std::endl
+              << "> start maxima" << std::endl
+              << std::endl;
     profiler.mark("maxima");
-    std::cout << "**** max index " << list.getMaxIndex() << std::endl;
-    std::cout << "**** max port " << list.getMaxPort() << std::endl;
-    std::cout << "**** max value " << list.getMaxValue() << std::endl;
+    maxima(list);
     profiler.elapse();
+
     //list.display();
     return 0;
 }
