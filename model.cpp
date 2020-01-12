@@ -323,6 +323,7 @@ void Liste::displayAt(int ix)
   std::cout << "timestamp " << item.timestamp << std::endl;
   std::cout << "type " << item.type << std::endl;
   std::cout << "value " << item.value << std::endl;
+  std::cout << std::endl;
 }
 
 /**
