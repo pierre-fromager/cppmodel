@@ -6,83 +6,9 @@
 #include <sstream>
 #include <chrono>
 #include <tuple>
+#include "model.h"
 
 using namespace std;
-
-/**
- * @brief item structure 
- * 
- */
-typedef struct
-{
-  int index;
-  int port;
-  string timestamp;
-  string type;
-  float value;
-} Item;
-
-/**
- * @brief time profiler
- * 
- * @return double 
- */
-double microtime()
-{
-  return (double(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) / double(1000000));
-}
-
-/**
- * @brief Liste Class
- * 
- */
-class Liste
-{
-
-public:
-  enum Directions
-  {
-    ASC,
-    DESC
-  };
-  enum Views
-  {
-    MAIN,
-    FILTERED
-  };
-  Liste();
-  ~Liste();
-  vector<Item> items();
-  Item itemAt(int ix);
-  void resetAll();
-  bool removeAt(int ix);
-  void appendItem(Item item);
-  bool setItemAt(int ix, Item item);
-  void sortByIndex();
-  void sortByPort();
-  void sortByValue();
-  void sortByPortAndValue();
-  int getSize();
-  int getMinValue();
-  int getMinPort();
-  int getMinIndex();
-  int getMaxValue();
-  int getMaxPort();
-  int getMaxIndex();
-  void filterByPort(int portFilter);
-  void filterByValue(int valueFilter);
-  void displayFiltered();
-  void displayAt(int ix);
-  void displayAll();
-  void setOrder(Directions direction);
-  void setView(Views mode);
-
-private:
-  Directions order;
-  Views view;
-  vector<Item> itemList;
-  vector<Item> filteredList;
-};
 
 /**
  * @brief Construct a new Temperature Liste:: Temperature Liste object
@@ -311,11 +237,11 @@ void Liste::sortByPortAndValue()
 /**
  * @brief return the temperature list items
  * 
- * @return vector<Item> 
+ * @return VectorItem
  */
-vector<Item> Liste::items()
+VectorItem Liste::items()
 {
-  return itemList;
+  return (view == MAIN) ? itemList : filteredList;
 }
 
 /**
@@ -390,8 +316,7 @@ bool Liste::setItemAt(int ix, Item item)
  */
 void Liste::displayAt(int ix)
 {
-  const source
-  const Item item = itemList.at(ix);
+  const Item item = items().at(ix);
   std::cout << "-------------------------" << std::endl;
   std::cout << "index " << item.index << std::endl;
   std::cout << "port " << item.port << std::endl;
@@ -406,7 +331,7 @@ void Liste::displayAt(int ix)
  */
 void Liste::displayAll()
 {
-  const int max = itemList.size();
+  const int max = items().size();
   for (int ix = 0; ix < max; ix++)
   {
     displayAt(ix);
@@ -421,63 +346,4 @@ void Liste::displayAll()
 void Liste::setOrder(Directions dir)
 {
   order = dir;
-}
-
-/**
- * @brief illustrate list manipulation as min max sort
- * g++ -g -std=c++11 -o testptr test-ptr.cpp
- * 
- * @return int 
- */
-int main()
-{
-  Liste list;
-  Item item;
-  cout << "**** start generation" << endl;
-  int itemAmount = 1000000;
-  double profGen = microtime();
-  for (int i = 0; i < itemAmount; i++)
-  {
-    item.index = i;
-    item.port = i % 4; // 0..4
-    item.timestamp = "2020-01-0" + to_string(i % 30);
-    item.type = "temperature";
-    item.value = rand() % 100; // 0..100
-    list.appendItem(item);
-  }
-  cout << "++++ Profile generation : " << microtime() - profGen << "s" << endl;
-  cout << "Liste size : " << list.getSize() << endl;
-  item.index = 1000;
-  item.value = 0;
-  item.timestamp = "3020-20-20";
-  list.appendItem(item);
-  cout << "**** after append" << endl;
-  cout << "Liste size : " << list.getSize() << endl;
-  cout << "**** start sorting" << endl;
-  cout << "**** start sort index" << endl;
-  list.setOrder(Liste::DESC);
-  double profIndex = microtime();
-  list.sortByIndex();
-  list.displayAt(0);
-  cout << "++++ Profile sorted index : " << microtime() - profIndex << "s" << endl;
-  cout << "**** start sort port" << endl;
-  list.setOrder(Liste::ASC);
-  double profPort = microtime();
-  list.sortByPort();
-  list.displayAt(0);
-  cout << "++++ Profile sort port : " << microtime() - profPort << "s" << endl;
-  cout << "**** start sort value" << endl;
-  list.setOrder(Liste::DESC);
-  double profValue = microtime();
-  list.sortByValue();
-  list.displayAt(0);
-  cout << "++++ Profile sort value : " << microtime() - profValue << "s" << endl;
-  cout << "**** min index " << list.getMinIndex() << endl;
-  cout << "**** min port " << list.getMinPort() << endl;
-  cout << "**** min value " << list.getMinValue() << endl;
-  cout << "**** max index " << list.getMaxIndex() << endl;
-  cout << "**** max port " << list.getMaxPort() << endl;
-  cout << "**** max value " << list.getMaxValue() << endl;
-  //list.display();
-  return 0;
 }
