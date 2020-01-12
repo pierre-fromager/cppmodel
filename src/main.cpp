@@ -1,8 +1,8 @@
 
 #include <string>
 #include <iostream>
-#include "profile.h"
-#include "model.h"
+#include "profile/profile.h"
+#include "model/model.h"
 
 using namespace std;
 
