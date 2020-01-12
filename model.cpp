@@ -26,6 +26,7 @@ Liste::Liste()
  */
 Liste::~Liste()
 {
+  resetAll();
 }
 
 /**
@@ -46,10 +47,7 @@ Liste &Liste::setView(Views mode)
  */
 Liste &Liste::filterByPort(int portFilter)
 {
-  //filteredList = {};
   filteredList.clear();
-  //const pt = filteredList.begin();
-  //filteredList.reserve(itemList.size());
   filteredList.resize(itemList.size());
   std::copy_if(
       itemList.begin(),
@@ -66,10 +64,8 @@ Liste &Liste::filterByPort(int portFilter)
  */
 Liste &Liste::filterByValue(int valueFilter)
 {
-  //filteredList = {};
   filteredList.clear();
   filteredList.resize(itemList.size());
-  //filteredList.reserve(itemList.size());
   std::copy_if(
       itemList.begin(),
       itemList.end(),
@@ -84,8 +80,10 @@ Liste &Liste::filterByValue(int valueFilter)
  */
 void Liste::resetAll()
 {
-  itemList = {};
-  filteredList = {};
+  itemList.clear();
+  itemList.resize(0);
+  filteredList.clear();
+  filteredList.resize(0);
 }
 
 /**

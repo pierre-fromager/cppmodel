@@ -22,7 +22,7 @@ void populateList(Item &item, Liste &list)
 {
     std::cout << std::endl
               << "> start generation" << std::endl;
-    int itemAmount = 100000;
+    int itemAmount = 1000000;
     for (int i = 0; i < itemAmount; i++)
     {
         item.index = i;
