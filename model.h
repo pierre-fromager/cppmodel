@@ -45,10 +45,6 @@ public:
     bool removeAt(int ix);
     void appendItem(Item item);
     bool setItemAt(int ix, Item item);
-    Liste& sortByIndex();
-    Liste& sortByPort();
-    Liste& sortByValue();
-    Liste& sortByPortAndValue();
     int getSize();
     int getMinValue();
     int getMinPort();
@@ -56,12 +52,16 @@ public:
     int getMaxValue();
     int getMaxPort();
     int getMaxIndex();
-    Liste& filterByPort(int portFilter);
-    Liste& filterByValue(int valueFilter);
     void displayAt(int ix);
     void displayAll();
-    Liste& setOrder(Directions direction);
     Liste& setView(Views mode);
+    Liste& setOrder(Directions direction);
+    Liste& sortByIndex();
+    Liste& sortByPort();
+    Liste& sortByValue();
+    Liste& sortByPortAndValue();
+    Liste& filterByPort(int portFilter);
+    Liste& filterByValue(int valueFilter);
 
 private:
     Directions order;

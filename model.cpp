@@ -30,51 +30,6 @@ Liste::~Liste()
 }
 
 /**
- * @brief chain method to set view mode as MAIN or FILTERED
- * 
- * @param mode 
- */
-Liste &Liste::setView(Views mode)
-{
-  view = mode;
-  return *this;
-}
-
-/**
- * @brief copy filtered items by port to the filtered list
- * 
- * @param portNumber 
- */
-Liste &Liste::filterByPort(int portFilter)
-{
-  filteredList.clear();
-  filteredList.resize(itemList.size());
-  std::copy_if(
-      itemList.begin(),
-      itemList.end(),
-      std::back_inserter(filteredList),
-      [portFilter](const Item &i) { return i.port == portFilter; });
-  return *this;
-}
-
-/**
- * @brief copy filtered items by value to the filtered list
- * 
- * @param valueFilter 
- */
-Liste &Liste::filterByValue(int valueFilter)
-{
-  filteredList.clear();
-  filteredList.resize(itemList.size());
-  std::copy_if(
-      itemList.begin(),
-      itemList.end(),
-      std::back_inserter(filteredList),
-      [valueFilter](const Item &i) { return i.value == valueFilter; });
-  return *this;
-}
-
-/**
  * @brief reset lists
  * 
  */
@@ -180,71 +135,6 @@ int Liste::getMaxIndex()
         return i1.index < i2.index;
       });
   return max->index;
-}
-
-/**
- * @brief chain method to sort list by index
- * 
- */
-Liste &Liste::sortByIndex()
-{
-  const bool isAsc = (order == ASC);
-  std::sort(
-      itemList.begin(),
-      itemList.end(),
-      [isAsc](const Item &i1, const Item &i2) {
-        return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
-      });
-  return *this;
-}
-
-/**
- * @brief chain method to sort by port
- * 
- */
-Liste &Liste::sortByPort()
-{
-  const bool isAsc = (order == ASC);
-  std::sort(
-      itemList.begin(),
-      itemList.end(),
-      [isAsc](const Item &i1, const Item &i2) {
-        return (isAsc) ? (i1.port < i2.port) : (i1.port > i2.port);
-      });
-  return *this;
-}
-
-/**
- * @brief chain method to sort by value
- * 
- */
-Liste &Liste::sortByValue()
-{
-  const bool isAsc = (order == ASC);
-  std::sort(
-      itemList.begin(),
-      itemList.end(),
-      [isAsc](const Item &i1, const Item &i2) {
-        return (isAsc) ? (i1.value < i2.value) : (i1.value > i2.value);
-      });
-  return *this;
-}
-
-/**
- * @brief multicriterias sort by port and value
- * 
- */
-Liste &Liste::sortByPortAndValue()
-{
-  const bool isAsc = (order == ASC);
-  std::sort(
-      itemList.begin(),
-      itemList.end(),
-      [isAsc](const Item &i1, const Item &i2) {
-        return (isAsc)
-                   ? std::tie(i1.port, i1.value) < std::tie(i2.port, i2.value)
-                   : std::tie(i1.port, i1.value) > std::tie(i2.port, i2.value);
-      });
 }
 
 /**
@@ -362,5 +252,115 @@ void Liste::displayAll()
 Liste &Liste::setOrder(Directions dir)
 {
   order = dir;
+  return *this;
+}
+
+/**
+ * @brief chain method to set view mode as MAIN or FILTERED
+ * 
+ * @param mode 
+ */
+Liste &Liste::setView(Views mode)
+{
+  view = mode;
+  return *this;
+}
+
+/**
+ * @brief chain method to sort list by index
+ * 
+ */
+Liste &Liste::sortByIndex()
+{
+  const bool isAsc = (order == ASC);
+  std::sort(
+      itemList.begin(),
+      itemList.end(),
+      [isAsc](const Item &i1, const Item &i2) {
+        return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
+      });
+  return *this;
+}
+
+/**
+ * @brief chain method to sort by port
+ * 
+ */
+Liste &Liste::sortByPort()
+{
+  const bool isAsc = (order == ASC);
+  std::sort(
+      itemList.begin(),
+      itemList.end(),
+      [isAsc](const Item &i1, const Item &i2) {
+        return (isAsc) ? (i1.port < i2.port) : (i1.port > i2.port);
+      });
+  return *this;
+}
+
+/**
+ * @brief chain method to sort by value
+ * 
+ */
+Liste &Liste::sortByValue()
+{
+  const bool isAsc = (order == ASC);
+  std::sort(
+      itemList.begin(),
+      itemList.end(),
+      [isAsc](const Item &i1, const Item &i2) {
+        return (isAsc) ? (i1.value < i2.value) : (i1.value > i2.value);
+      });
+  return *this;
+}
+
+/**
+ * @brief multicriterias sort by port and value
+ * 
+ */
+Liste &Liste::sortByPortAndValue()
+{
+  const bool isAsc = (order == ASC);
+  std::sort(
+      itemList.begin(),
+      itemList.end(),
+      [isAsc](const Item &i1, const Item &i2) {
+        return (isAsc)
+                   ? std::tie(i1.port, i1.value) < std::tie(i2.port, i2.value)
+                   : std::tie(i1.port, i1.value) > std::tie(i2.port, i2.value);
+      });
+}
+
+/**
+ * @brief copy filtered items by port to the filtered list
+ * 
+ * @param portNumber 
+ */
+Liste &Liste::filterByPort(int portFilter)
+{
+  filteredList.clear();
+  filteredList.resize(itemList.size());
+  std::copy_if(
+      itemList.begin(),
+      itemList.end(),
+      std::back_inserter(filteredList),
+      [portFilter](const Item &i) { return i.port == portFilter; });
+  return *this;
+}
+
+/**
+ * @brief copy filtered items by value to the filtered list
+ * 
+ * @param valueFilter 
+ */
+Liste &Liste::filterByValue(int valueFilter)
+{
+  filteredList.clear();
+  filteredList.resize(itemList.size());
+  std::copy_if(
+      itemList.begin(),
+      itemList.end(),
+      std::back_inserter(filteredList),
+      [valueFilter](const Item &i) { return i.value == valueFilter; });
   return *this;
 }
