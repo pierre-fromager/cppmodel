@@ -11,7 +11,7 @@
 using namespace std;
 
 /**
- * @brief Construct a new Temperature Liste:: Temperature Liste object
+ * @brief Construct a new Liste of temperature items
  * 
  */
 Liste::Liste()
@@ -21,7 +21,7 @@ Liste::Liste()
 }
 
 /**
- * @brief Destroy the Temperature Liste:: Temperature Liste object
+ * @brief Destroy the Temperature Liste
  * 
  */
 Liste::~Liste()
@@ -29,13 +29,14 @@ Liste::~Liste()
 }
 
 /**
- * @brief set view mode as MAIN or FILTERED
+ * @brief chain method to set view mode as MAIN or FILTERED
  * 
  * @param mode 
  */
-void Liste::setView(Views mode)
+Liste &Liste::setView(Views mode)
 {
   view = mode;
+  return *this;
 }
 
 /**
@@ -43,27 +44,38 @@ void Liste::setView(Views mode)
  * 
  * @param portNumber 
  */
-void Liste::filterByPort(int portFilter)
+Liste &Liste::filterByPort(int portFilter)
 {
-  filteredList = {};
+  //filteredList = {};
+  filteredList.clear();
+  //const pt = filteredList.begin();
+  //filteredList.reserve(itemList.size());
+  filteredList.resize(itemList.size());
   std::copy_if(
       itemList.begin(),
       itemList.end(),
-      std::back_inserter(filteredList), [portFilter](const Item &i) { return i.port == portFilter; });
+      std::back_inserter(filteredList),
+      [portFilter](const Item &i) { return i.port == portFilter; });
+  return *this;
 }
 
 /**
  * @brief copy filtered items by value to the filtered list
  * 
- * @param portNumber 
+ * @param valueFilter 
  */
-void Liste::filterByValue(int valueFilter)
+Liste &Liste::filterByValue(int valueFilter)
 {
-  filteredList = {};
+  //filteredList = {};
+  filteredList.clear();
+  filteredList.resize(itemList.size());
+  //filteredList.reserve(itemList.size());
   std::copy_if(
       itemList.begin(),
       itemList.end(),
-      std::back_inserter(filteredList), [valueFilter](const Item &i) { return i.value == valueFilter; });
+      std::back_inserter(filteredList),
+      [valueFilter](const Item &i) { return i.value == valueFilter; });
+  return *this;
 }
 
 /**
@@ -173,10 +185,10 @@ int Liste::getMaxIndex()
 }
 
 /**
- * @brief sort list by index
+ * @brief chain method to sort list by index
  * 
  */
-void Liste::sortByIndex()
+Liste &Liste::sortByIndex()
 {
   const bool isAsc = (order == ASC);
   std::sort(
@@ -185,13 +197,14 @@ void Liste::sortByIndex()
       [isAsc](const Item &i1, const Item &i2) {
         return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
       });
+  return *this;
 }
 
 /**
- * @brief sort by port
+ * @brief chain method to sort by port
  * 
  */
-void Liste::sortByPort()
+Liste &Liste::sortByPort()
 {
   const bool isAsc = (order == ASC);
   std::sort(
@@ -200,13 +213,14 @@ void Liste::sortByPort()
       [isAsc](const Item &i1, const Item &i2) {
         return (isAsc) ? (i1.port < i2.port) : (i1.port > i2.port);
       });
+  return *this;
 }
 
 /**
- * @brief sort by value
+ * @brief chain method to sort by value
  * 
  */
-void Liste::sortByValue()
+Liste &Liste::sortByValue()
 {
   const bool isAsc = (order == ASC);
   std::sort(
@@ -215,13 +229,14 @@ void Liste::sortByValue()
       [isAsc](const Item &i1, const Item &i2) {
         return (isAsc) ? (i1.value < i2.value) : (i1.value > i2.value);
       });
+  return *this;
 }
 
 /**
  * @brief multicriterias sort by port and value
  * 
  */
-void Liste::sortByPortAndValue()
+Liste &Liste::sortByPortAndValue()
 {
   const bool isAsc = (order == ASC);
   std::sort(
@@ -317,12 +332,14 @@ bool Liste::setItemAt(int ix, Item item)
 void Liste::displayAt(int ix)
 {
   const Item item = items().at(ix);
-  std::cout << "-------------------------" << std::endl;
-  std::cout << "index " << item.index << std::endl;
-  std::cout << "port " << item.port << std::endl;
-  std::cout << "timestamp " << item.timestamp << std::endl;
-  std::cout << "type " << item.type << std::endl;
-  std::cout << "value " << item.value << std::endl;
+  const string separator = "-------------------------";
+  std::cout << separator << std::endl;
+  std::cout << "- index " << item.index << std::endl;
+  std::cout << "- port " << item.port << std::endl;
+  std::cout << "- timestamp " << item.timestamp << std::endl;
+  std::cout << "- type " << item.type << std::endl;
+  std::cout << "- value " << item.value << std::endl;
+  std::cout << separator << std::endl;
   std::cout << std::endl;
 }
 
@@ -344,7 +361,8 @@ void Liste::displayAll()
  * 
  * @param dir 
  */
-void Liste::setOrder(Directions dir)
+Liste &Liste::setOrder(Directions dir)
 {
   order = dir;
+  return *this;
 }

@@ -1,10 +1,16 @@
 
+#include <string>
 #include <iostream>
 #include <chrono>
 #include "profile.h"
 #include "model.h"
 
 using namespace std;
+
+void println(string msg)
+{
+    std::cout << msg << std::endl;
+}
 
 /**
  * @brief populate list
@@ -16,7 +22,7 @@ void populateList(Item &item, Liste &list)
 {
     std::cout << std::endl
               << "> start generation" << std::endl;
-    int itemAmount = 1000000;
+    int itemAmount = 100000;
     for (int i = 0; i < itemAmount; i++)
     {
         item.index = i;
@@ -26,7 +32,7 @@ void populateList(Item &item, Liste &list)
         item.value = rand() % 100; // 0..100
         list.appendItem(item);
     }
-    std::cout << "> Liste size : " << list.getSize() << std::endl;
+    println("> Liste size : " + std::to_string(list.getSize()));
 }
 
 /**
@@ -41,8 +47,8 @@ void appendItem(Item &item, Liste &list)
     item.value = 0;
     item.timestamp = "3020-20-20";
     list.appendItem(item);
-    std::cout << "> after append" << std::endl;
-    std::cout << "> Liste size : " << list.getSize() << std::endl;
+    println("> after append");
+    println("> Liste size : " + std::to_string(list.getSize()));
 }
 
 /**
@@ -52,11 +58,8 @@ void appendItem(Item &item, Liste &list)
  */
 void sortByIndex(Liste &list)
 {
-    std::cout << std::endl
-              << "> start sort index" << std::endl;
-    list.setOrder(Liste::DESC);
-    list.sortByIndex();
-    list.displayAt(0);
+    println("> start sort index");
+    list.setOrder(Liste::DESC).sortByIndex().displayAt(0);
 }
 
 /**
@@ -66,10 +69,8 @@ void sortByIndex(Liste &list)
  */
 void sortByPort(Liste &list)
 {
-    std::cout << "> start sort port" << std::endl;
-    list.setOrder(Liste::ASC);
-    list.sortByPort();
-    list.displayAt(0);
+    println("> start sort port");
+    list.setOrder(Liste::ASC).sortByPort().displayAt(0);
 }
 
 /**
@@ -79,10 +80,8 @@ void sortByPort(Liste &list)
  */
 void sortByValue(Liste &list)
 {
-    std::cout << "> start sort value" << std::endl;
-    list.setOrder(Liste::ASC);
-    list.sortByValue();
-    list.displayAt(0);
+    println("> start sort value");
+    list.setOrder(Liste::ASC).sortByValue().displayAt(0);
 }
 
 /**
@@ -92,9 +91,9 @@ void sortByValue(Liste &list)
  */
 void minima(Liste &list)
 {
-    std::cout << "min index " << list.getMinIndex() << std::endl;
-    std::cout << "min port " << list.getMinPort() << std::endl;
-    std::cout << "min value " << list.getMinValue() << std::endl;
+    println("min index " + std::to_string(list.getMinIndex()));
+    println("min port " + std::to_string(list.getMinPort()));
+    println("min value " + std::to_string(list.getMinValue()));
 }
 
 /**
@@ -104,9 +103,25 @@ void minima(Liste &list)
  */
 void maxima(Liste &list)
 {
-    std::cout << "max index " << list.getMaxIndex() << std::endl;
-    std::cout << "max port " << list.getMaxPort() << std::endl;
-    std::cout << "max value " << list.getMaxValue() << std::endl;
+    println("max index " + std::to_string(list.getMaxIndex()));
+    println("max port " + std::to_string(list.getMaxPort()));
+    println("max value " + std::to_string(list.getMaxValue()));
+}
+
+/**
+ * @brief count filtered by port then by value
+ * 
+ * @param list 
+ */
+void filterItems(Liste &list)
+{
+    list.setView(Liste::MAIN).filterByValue(0).setView(Liste::FILTERED);
+    int countFilteredValue = list.items().size();
+    println("count filtered values 0 : " + std::to_string(countFilteredValue));
+    list.setView(Liste::MAIN).filterByPort(0).setView(Liste::FILTERED);
+    const int countFilteredPort = list.items().size();
+    println("count filteres ports 0 : " + std::to_string(countFilteredPort));
+    list.setView(Liste::MAIN);
 }
 
 /**
@@ -116,6 +131,7 @@ void maxima(Liste &list)
  */
 int main()
 {
+
     Profile profiler;
     Liste list;
     Item item;
@@ -158,6 +174,13 @@ int main()
     maxima(list);
     profiler.elapse();
 
-    //list.display();
+    std::cout << std::endl
+              << "> start filtering" << std::endl
+              << std::endl;
+    profiler.mark("filters");
+    filterItems(list);
+    profiler.elapse();
+
+    list.displayAt(0);
     return 0;
 }
