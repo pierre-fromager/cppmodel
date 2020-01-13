@@ -19,20 +19,18 @@ namespace cppmodel
     //
     //
     template <class T>
-        class File
+        class FileTemplate
         {
 
         public:
-            File(std::string &filename, TemplateListe<T> &list);
-            bool load();
-            bool save();
-            void setFilename();
-            void setListe();
+            FileTemplate(std::string &filename, TemplateListe<T> &list);
+            bool write(std::ostream &s);
+            bool read(std::istream &s);
 
         private:
             std::string m_filename;
             TemplateListe<T> m_list;
     };
 
-} // namespace cppmodel
+}
 #endif
