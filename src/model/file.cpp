@@ -3,15 +3,9 @@
 
 using namespace cppmodel;
 
-/*
-template <typename T>
-struct TemplateListe
-{
-    typedef std::vector<T> type;
-};*/
-
 template <class T>
-File<T>::File(std::string filename, TemplateListe list)
+
+File<T>::File(std::string &filename, TemplateListe<T> &list)
     : m_filename(filename), m_list(list)
 {
 }

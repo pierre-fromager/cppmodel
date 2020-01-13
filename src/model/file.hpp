@@ -13,6 +13,7 @@ namespace cppmodel
     {
         typedef std::vector<T> type;
     };
+
     //
     // @brief File Class
     //
@@ -22,7 +23,7 @@ namespace cppmodel
         {
 
         public:
-            File(std::string &filename, TemplateListe &list);
+            File(std::string &filename, TemplateListe<T> &list);
             bool load();
             bool save();
             void setFilename();
@@ -30,7 +31,7 @@ namespace cppmodel
 
         private:
             std::string m_filename;
-            TemplateListe m_list;
+            TemplateListe<T> m_list;
     };
 
 } // namespace cppmodel
