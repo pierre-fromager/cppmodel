@@ -6,31 +6,33 @@
 #include <sstream>
 #include <chrono>
 #include <tuple>
-#include "model.hpp"
+#include "liste.hpp"
 
-/**
- * @brief Construct a new Liste of temperature items
- * 
- */
+using namespace cppmodel;
+
+//
+// @brief Construct a new Liste of temperature items
+//
+//
 Liste::Liste()
 {
   order = ASC;
   resetAll();
 }
 
-/**
- * @brief Destroy the Temperature Liste
- * 
- */
+//
+// @brief Destroy the Temperature Liste
+//
+//
 Liste::~Liste()
 {
   resetAll();
 }
 
-/**
- * @brief reset lists
- * 
- */
+//
+// @brief reset lists
+//
+//
 void Liste::resetAll()
 {
   itemList.clear();
@@ -39,11 +41,11 @@ void Liste::resetAll()
   filteredList.resize(0);
 }
 
-/**
- * @brief minimum value
- * 
- * @return int 
- */
+//
+// @brief minimum value
+//
+// @return int
+//
 int Liste::getMinValue()
 {
   const auto min = std::min_element(
@@ -55,11 +57,11 @@ int Liste::getMinValue()
   return min->value;
 }
 
-/**
- * @brief minimum port
- * 
- * @return int 
- */
+//
+// @brief minimum port
+//
+// @return int
+//
 int Liste::getMinPort()
 {
   const auto min = std::min_element(
@@ -71,11 +73,11 @@ int Liste::getMinPort()
   return min->port;
 }
 
-/**
- * @brief minimum index
- * 
- * @return int 
- */
+//
+// @brief minimum index
+//
+// @return int
+//
 int Liste::getMinIndex()
 {
   const auto min = std::min_element(
@@ -87,11 +89,11 @@ int Liste::getMinIndex()
   return min->index;
 }
 
-/**
- * @brief maximum value
- * 
- * @return int 
- */
+//
+// @brief maximum value
+//
+// @return int
+//
 int Liste::getMaxValue()
 {
   const auto max = std::max_element(
@@ -103,11 +105,11 @@ int Liste::getMaxValue()
   return max->value;
 }
 
-/**
- * @brief maximum port
- * 
- * @return int 
- */
+//
+// @brief maximum port
+//
+// @return int
+//
 int Liste::getMaxPort()
 {
   const auto max = std::max_element(
@@ -119,11 +121,11 @@ int Liste::getMaxPort()
   return max->port;
 }
 
-/**
- * @brief maximum index
- * 
- * @return int 
- */
+//
+// @brief maximum index
+//
+// @return int
+//
 int Liste::getMaxIndex()
 {
   const auto max = std::max_element(
@@ -135,22 +137,22 @@ int Liste::getMaxIndex()
   return max->index;
 }
 
-/**
- * @brief return the temperature list items
- * 
- * @return VectorItem
- */
+//
+// @brief return the temperature list items
+//
+// @return VectorItem
+//
 VectorItem Liste::items()
 {
   return (view == MAIN) ? itemList : filteredList;
 }
 
-/**
- * @brief get temperature item at position
- * 
- * @param ix 
- * @return Item 
- */
+//
+// @brief get temperature item at position
+//
+// @param ix
+// @return Item
+//
 Item Liste::itemAt(int ix)
 {
   const int size = itemList.size();
@@ -159,13 +161,13 @@ Item Liste::itemAt(int ix)
   return itemList.at(ix);
 }
 
-/**
- * @brief remove a temperature item at position
- * 
- * @param ix 
- * @return true 
- * @return false 
- */
+//
+// @brief remove a temperature item at position
+//
+// @param ix
+// @return true
+// @return false
+//
 bool Liste::removeAt(const int ix)
 {
   if (itemList.size() < ix)
@@ -174,34 +176,34 @@ bool Liste::removeAt(const int ix)
   return true;
 }
 
-/**
- * @brief returns liste size
- * 
- * @return int 
- */
+//
+// @brief returns liste size
+//
+// @return int
+//
 int Liste::getSize()
 {
   return itemList.size();
 }
 
-/**
- * @brief append a temperature item element at the end
- * 
- * @param item 
- */
+//
+// @brief append a temperature item element at the end
+//
+// @param item
+//
 void Liste::appendItem(Item item)
 {
   itemList.push_back(item);
 }
 
-/**
- * @brief set temperature item at position
- * 
- * @param ix 
- * @param item 
- * @return true 
- * @return false 
- */
+//
+// @brief set temperature item at position
+//
+// @param ix
+// @param item
+// @return true
+// @return false
+//
 bool Liste::setItemAt(int ix, Item item)
 {
   if (itemList.size() < ix)
@@ -213,10 +215,10 @@ bool Liste::setItemAt(int ix, Item item)
   return true;
 }
 
-/**
- * @brief display item at position
- * 
- */
+//
+// @brief display item at position
+//
+//
 void Liste::displayAt(int ix)
 {
   const Item item = items().at(ix);
@@ -231,10 +233,10 @@ void Liste::displayAt(int ix)
   std::cout << std::endl;
 }
 
-/**
- * @brief display all list items
- * 
- */
+//
+// @brief display all list items
+//
+//
 void Liste::displayAll()
 {
   const int max = items().size();
@@ -244,32 +246,32 @@ void Liste::displayAll()
   }
 }
 
-/**
- * @brief set sort Directions
- * 
- * @param dir 
- */
+//
+// @brief set sort Directions
+//
+// @param dir
+//
 Liste &Liste::setOrder(Directions dir)
 {
   order = dir;
   return *this;
 }
 
-/**
- * @brief chain method to set view mode as MAIN or FILTERED
- * 
- * @param mode 
- */
+//
+// @brief chain method to set view mode as MAIN or FILTERED
+//
+// @param mode
+//
 Liste &Liste::setView(Views mode)
 {
   view = mode;
   return *this;
 }
 
-/**
- * @brief chain method to sort list by index
- * 
- */
+//
+// @brief chain method to sort list by index
+//
+//
 Liste &Liste::sortByIndex()
 {
   const bool isAsc = (order == ASC);
@@ -282,10 +284,10 @@ Liste &Liste::sortByIndex()
   return *this;
 }
 
-/**
- * @brief chain method to sort by port
- * 
- */
+//
+// @brief chain method to sort by port
+//
+//
 Liste &Liste::sortByPort()
 {
   const bool isAsc = (order == ASC);
@@ -298,10 +300,10 @@ Liste &Liste::sortByPort()
   return *this;
 }
 
-/**
- * @brief chain method to sort by value
- * 
- */
+//
+// @brief chain method to sort by value
+//
+//
 Liste &Liste::sortByValue()
 {
   const bool isAsc = (order == ASC);
@@ -314,10 +316,10 @@ Liste &Liste::sortByValue()
   return *this;
 }
 
-/**
- * @brief multicriterias sort by port and value
- * 
- */
+//
+// @brief multicriterias sort by port and value
+//
+//
 Liste &Liste::sortByPortAndValue()
 {
   const bool isAsc = (order == ASC);
@@ -331,11 +333,11 @@ Liste &Liste::sortByPortAndValue()
       });
 }
 
-/**
- * @brief copy filtered items by port to the filtered list
- * 
- * @param portNumber 
- */
+//
+// @brief copy filtered items by port to the filtered list
+//
+// @param portNumber
+//
 Liste &Liste::filterByPort(int portFilter)
 {
   filteredList.clear();
@@ -348,11 +350,11 @@ Liste &Liste::filterByPort(int portFilter)
   return *this;
 }
 
-/**
- * @brief copy filtered items by value to the filtered list
- * 
- * @param valueFilter 
- */
+//
+// @brief copy filtered items by value to the filtered list
+//
+// @param valueFilter
+//
 Liste &Liste::filterByValue(int valueFilter)
 {
   filteredList.clear();

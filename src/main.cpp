@@ -2,13 +2,13 @@
 #include <iostream>
 #include "demo/demo.hpp"
 
-using namespace std;
+using namespace cppmodel;
 
-/**
- * @brief illustrate vector featuring as min max sort filter
- * 
- * @return int 
- */
+//
+// @brief illustrate vector featuring as min max sort filter
+//
+// @return int
+//
 int main()
 {
 

@@ -3,40 +3,41 @@
 #include <chrono>
 #include "profile.hpp"
 
-/**
- * @brief Construct a new Profile:: Profile object
- * 
- */
+using namespace cppmodel;
+
+//
+// @brief Construct a new Profile:: Profile object
+//
+//
 Profile::Profile()
 {
 }
 
-/**
- * @brief mark in
- * 
- * @param markerMsg 
- */
+//
+// @brief mark in
+//
+//@param markerMsg
+//
 void Profile::mark(std::string markerMsg)
 {
     msg = markerMsg;
     in = microtime();
 }
 
-/**
- * @brief mark out caulculate elapse and display msg
- * 
- */
+//
+// @brief mark out caulculate elapse and display msg
+//
+//
 void Profile::elapse()
 {
-    out = microtime();
-    std::cout << "+  Profile " << msg << " : " << out - in << "s" << std::endl;
+    std::cout << "+  Profile " << msg << " : " << microtime() - in << "s" << std::endl;
 }
 
-/**
- * @brief time profiler
- * 
- * @return double 
- */
+//
+// @brief time profiler
+//
+// @return double
+//
 double Profile::microtime()
 {
     return (double(

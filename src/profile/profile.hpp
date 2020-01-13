@@ -4,19 +4,21 @@
 
 #include <string>
 
-class Profile
+namespace cppmodel
 {
+    class Profile
+    {
 
-public:
-    Profile();
-    void mark(std::string msg);
-    void elapse();
+    public:
+        Profile();
+        void mark(std::string msg);
+        void elapse();
 
-private:
-    double microtime();
-    double in;
-    double out;
-    std::string msg;
-};
+    private:
+        double microtime();
+        double in;
+        std::string msg;
+    };
+}
 
 #endif
