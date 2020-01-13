@@ -1,9 +1,9 @@
 #!/bin/bash
-echo "Compilation started";
+echo "Building demo model"
 g++ -g -std=c++11 src/main.cpp \
-src/demo/demo.h src/demo/demo.cpp \
-src/model/model.h src/model/model.cpp \
-src/profile/profile.h src/profile/profile.cpp \
--o build/model
-echo "Compilation finished";
-echo "Runtime is ./build/model";
+    src/demo/demo.hpp src/demo/demo.cpp \
+    src/model/model.hpp src/model/model.cpp \
+    src/profile/profile.hpp src/profile/profile.cpp \
+    -o build/demo
+echo "Compilation completed"
+echo "Runtime is ./build/demo"

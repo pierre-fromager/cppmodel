@@ -6,9 +6,7 @@
 #include <sstream>
 #include <chrono>
 #include <tuple>
-#include "model.h"
-
-using namespace std;
+#include "model.hpp"
 
 /**
  * @brief Construct a new Liste of temperature items
@@ -207,7 +205,9 @@ void Liste::appendItem(Item item)
 bool Liste::setItemAt(int ix, Item item)
 {
   if (itemList.size() < ix)
+  {
     return false;
+  }
   itemList[ix] = item;
   //itemList.insert(itemList.begin() + ix, item);
   return true;
@@ -220,7 +220,7 @@ bool Liste::setItemAt(int ix, Item item)
 void Liste::displayAt(int ix)
 {
   const Item item = items().at(ix);
-  const string separator = "-------------------------";
+  const std::string separator = "-------------------------";
   std::cout << separator << std::endl;
   std::cout << "- index " << item.index << std::endl;
   std::cout << "- port " << item.port << std::endl;

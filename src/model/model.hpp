@@ -1,8 +1,9 @@
 
+#ifndef CPPMODEL_LISTE_HPP
+#define CPPMODEL_LISTE_HPP
+
 #include <string>
 #include <vector>
-
-using namespace std;
 
 /**
  * @brief item structure 
@@ -12,12 +13,12 @@ typedef struct
 {
     int index;
     int port;
-    string timestamp;
-    string type;
+    std::string timestamp;
+    std::string type;
     float value;
 } Item;
 
-typedef vector<Item> VectorItem;
+typedef std::vector<Item> VectorItem;
 
 /**
  * @brief Liste Class
@@ -54,14 +55,14 @@ public:
     int getMaxIndex();
     void displayAt(int ix);
     void displayAll();
-    Liste& setView(Views mode);
-    Liste& setOrder(Directions direction);
-    Liste& sortByIndex();
-    Liste& sortByPort();
-    Liste& sortByValue();
-    Liste& sortByPortAndValue();
-    Liste& filterByPort(int portFilter);
-    Liste& filterByValue(int valueFilter);
+    Liste &setView(Views mode);
+    Liste &setOrder(Directions direction);
+    Liste &sortByIndex();
+    Liste &sortByPort();
+    Liste &sortByValue();
+    Liste &sortByPortAndValue();
+    Liste &filterByPort(int portFilter);
+    Liste &filterByValue(int valueFilter);
 
 private:
     Directions order;
@@ -69,3 +70,5 @@ private:
     VectorItem itemList;
     VectorItem filteredList;
 };
+
+#endif

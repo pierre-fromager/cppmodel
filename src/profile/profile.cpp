@@ -1,9 +1,7 @@
 
 #include <iostream>
 #include <chrono>
-#include "profile.h"
-
-using namespace std;
+#include "profile.hpp"
 
 /**
  * @brief Construct a new Profile:: Profile object
@@ -18,7 +16,7 @@ Profile::Profile()
  * 
  * @param markerMsg 
  */
-void Profile::mark(string markerMsg)
+void Profile::mark(std::string markerMsg)
 {
     msg = markerMsg;
     in = microtime();
@@ -41,5 +39,9 @@ void Profile::elapse()
  */
 double Profile::microtime()
 {
-    return (double(std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::system_clock::now().time_since_epoch()).count()) / double(1000000));
+    return (double(
+                std::chrono::duration_cast<std::chrono::microseconds>(
+                    std::chrono::system_clock::now().time_since_epoch())
+                    .count()) /
+            double(1000000));
 }

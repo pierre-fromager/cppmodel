@@ -1,17 +1,17 @@
 
+#ifndef CPPMODEL_DEMO_HPP
+#define CPPMODEL_DEMO_HPP
+
 #include <string>
 #include <iostream>
-#include "../profile/profile.h"
-#include "../model/model.h"
-
-using namespace std;
+#include "../profile/profile.hpp"
+#include "../model/model.hpp"
 
 class Demo
 {
 
 public:
     Demo(Profile &profiler, Item &item, Liste &list);
-    void println(string msg);
     void populateList();
     void appendItem();
     void sortByIndex();
@@ -22,7 +22,10 @@ public:
     void filterItems();
 
 private:
-    Profile _profiler;
-    Item _item;
-    Liste _list;
+    void println(std::string msg);
+    Profile m_profiler;
+    Item m_item;
+    Liste m_list;
 };
+
+#endif

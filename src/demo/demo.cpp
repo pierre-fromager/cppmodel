@@ -1,11 +1,16 @@
 
-#include "demo.h"
+#include "demo.hpp"
 
+/**
+ * @brief Construct a new Demo:: Demo object
+ * 
+ * @param profiler 
+ * @param item 
+ * @param list 
+ */
 Demo::Demo(Profile &profiler, Item &item, Liste &list)
+    : m_profiler(profiler), m_item(item), m_list(list)
 {
-    _profiler = profiler;
-    _item = item;
-    _list = list;
 }
 
 /**
@@ -13,7 +18,7 @@ Demo::Demo(Profile &profiler, Item &item, Liste &list)
  * 
  * @param msg 
  */
-void Demo::println(string msg)
+void Demo::println(std::string msg)
 {
     std::cout << msg << std::endl;
 }
@@ -24,21 +29,21 @@ void Demo::println(string msg)
  */
 void Demo::populateList()
 {
-    _profiler.mark("generation");
+    m_profiler.mark("generation");
     std::cout << std::endl
               << "> start generation" << std::endl;
     int itemAmount = 1000000;
     for (int i = 0; i < itemAmount; i++)
     {
-        _item.index = i;
-        _item.port = i % 4; // 0..4
-        _item.timestamp = "2020-01-0" + to_string(i % 30);
-        _item.type = "temperature";
-        _item.value = rand() % 100; // 0..100
-        _list.appendItem(_item);
+        m_item.index = i;
+        m_item.port = i % 4; // 0..4
+        m_item.timestamp = "2020-01-0" + std::to_string(i % 30);
+        m_item.type = "temperature";
+        m_item.value = rand() % 100; // 0..100
+        m_list.appendItem(m_item);
     }
-    println("> Liste size : " + std::to_string(_list.getSize()));
-    _profiler.elapse();
+    println("> Liste size : " + std::to_string(m_list.getSize()));
+    m_profiler.elapse();
 }
 
 /**
@@ -47,14 +52,14 @@ void Demo::populateList()
  */
 void Demo::appendItem()
 {
-    _profiler.mark("append item");
-    _item.index = 1000;
-    _item.value = 0;
-    _item.timestamp = "3020-20-20";
-    _list.appendItem(_item);
+    m_profiler.mark("append item");
+    m_item.index = 1000;
+    m_item.value = 0;
+    m_item.timestamp = "3020-20-20";
+    m_list.appendItem(m_item);
     println("> after append");
-    println("> Liste size : " + std::to_string(_list.getSize()));
-    _profiler.elapse();
+    println("> Liste size : " + std::to_string(m_list.getSize()));
+    m_profiler.elapse();
 }
 
 /**
@@ -63,10 +68,10 @@ void Demo::appendItem()
  */
 void Demo::sortByIndex()
 {
-    _profiler.mark("sort index");
+    m_profiler.mark("sort index");
     println("> start sort index");
-    _list.setOrder(Liste::DESC).sortByIndex().displayAt(0);
-    _profiler.elapse();
+    m_list.setOrder(Liste::DESC).sortByIndex().displayAt(0);
+    m_profiler.elapse();
 }
 
 /**
@@ -75,10 +80,10 @@ void Demo::sortByIndex()
  */
 void Demo::sortByPort()
 {
-    _profiler.mark("sort port");
+    m_profiler.mark("sort port");
     println("> start sort port");
-    _list.setOrder(Liste::ASC).sortByPort().displayAt(0);
-    _profiler.elapse();
+    m_list.setOrder(Liste::ASC).sortByPort().displayAt(0);
+    m_profiler.elapse();
 }
 
 /**
@@ -87,10 +92,10 @@ void Demo::sortByPort()
  */
 void Demo::sortByValue()
 {
-    _profiler.mark("sort value");
+    m_profiler.mark("sort value");
     println("> start sort value");
-    _list.setOrder(Liste::ASC).sortByValue().displayAt(0);
-    _profiler.elapse();
+    m_list.setOrder(Liste::ASC).sortByValue().displayAt(0);
+    m_profiler.elapse();
 }
 
 /**
@@ -99,11 +104,11 @@ void Demo::sortByValue()
  */
 void Demo::minima()
 {
-    _profiler.mark("minima");
-    println("min index " + std::to_string(_list.getMinIndex()));
-    println("min port " + std::to_string(_list.getMinPort()));
-    println("min value " + std::to_string(_list.getMinValue()));
-    _profiler.elapse();
+    m_profiler.mark("minima");
+    println("min index " + std::to_string(m_list.getMinIndex()));
+    println("min port " + std::to_string(m_list.getMinPort()));
+    println("min value " + std::to_string(m_list.getMinValue()));
+    m_profiler.elapse();
 }
 
 /**
@@ -112,11 +117,11 @@ void Demo::minima()
  */
 void Demo::maxima()
 {
-    _profiler.mark("maxima");
-    println("max index " + std::to_string(_list.getMaxIndex()));
-    println("max port " + std::to_string(_list.getMaxPort()));
-    println("max value " + std::to_string(_list.getMaxValue()));
-    _profiler.elapse();
+    m_profiler.mark("maxima");
+    println("max index " + std::to_string(m_list.getMaxIndex()));
+    println("max port " + std::to_string(m_list.getMaxPort()));
+    println("max value " + std::to_string(m_list.getMaxValue()));
+    m_profiler.elapse();
 }
 
 /**
@@ -125,13 +130,13 @@ void Demo::maxima()
  */
 void Demo::filterItems()
 {
-    _profiler.mark("filters");
-    _list.setView(Liste::MAIN).filterByValue(0).setView(Liste::FILTERED);
-    int countFilteredValue = _list.items().size();
+    m_profiler.mark("filters");
+    m_list.setView(Liste::MAIN).filterByValue(0).setView(Liste::FILTERED);
+    int countFilteredValue = m_list.items().size();
     println("count filtered values 0 : " + std::to_string(countFilteredValue));
-    _list.setView(Liste::MAIN).filterByPort(0).setView(Liste::FILTERED);
-    const int countFilteredPort = _list.items().size();
+    m_list.setView(Liste::MAIN).filterByPort(0).setView(Liste::FILTERED);
+    const int countFilteredPort = m_list.items().size();
     println("count filteres ports 0 : " + std::to_string(countFilteredPort));
-    _list.setView(Liste::MAIN);
-    _profiler.elapse();
+    m_list.setView(Liste::MAIN);
+    m_profiler.elapse();
 }
