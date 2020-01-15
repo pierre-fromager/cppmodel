@@ -1,6 +1,6 @@
 
-#ifndef CPPMODEL_LISTE_HPP
-#define CPPMODEL_LISTE_HPP
+#ifndef CPPMODEL_LISTE_TEMPERATURE_HPP
+#define CPPMODEL_LISTE_TEMPERATURE_HPP
 
 #include <string>
 #include <vector>
