@@ -6,7 +6,7 @@
 #include <sstream>
 #include <chrono>
 #include <tuple>
-#include "liste.hpp"
+#include "liste_temperature.hpp"
 
 using namespace cppmodel;
 
@@ -14,7 +14,7 @@ using namespace cppmodel;
 // @brief Construct a new Liste of temperature items
 //
 //
-Liste::Liste()
+ListeTemperature::ListeTemperature()
 {
   order = ASC;
   resetAll();
@@ -24,7 +24,7 @@ Liste::Liste()
 // @brief Destroy the Temperature Liste
 //
 //
-Liste::~Liste()
+ ListeTemperature::~ListeTemperature()
 {
   resetAll();
 }
@@ -33,7 +33,7 @@ Liste::~Liste()
 // @brief reset lists
 //
 //
-void Liste::resetAll()
+void  ListeTemperature::resetAll()
 {
   itemList.clear();
   itemList.resize(0);
@@ -46,7 +46,7 @@ void Liste::resetAll()
 //
 // @return int
 //
-int Liste::getMinValue()
+int  ListeTemperature::getMinValue()
 {
   const auto min = std::min_element(
       itemList.begin(),
@@ -62,7 +62,7 @@ int Liste::getMinValue()
 //
 // @return int
 //
-int Liste::getMinPort()
+int  ListeTemperature::getMinPort()
 {
   const auto min = std::min_element(
       itemList.begin(),
@@ -78,7 +78,7 @@ int Liste::getMinPort()
 //
 // @return int
 //
-int Liste::getMinIndex()
+int  ListeTemperature::getMinIndex()
 {
   const auto min = std::min_element(
       itemList.begin(),
@@ -94,7 +94,7 @@ int Liste::getMinIndex()
 //
 // @return int
 //
-int Liste::getMaxValue()
+int  ListeTemperature::getMaxValue()
 {
   const auto max = std::max_element(
       itemList.begin(),
@@ -110,7 +110,7 @@ int Liste::getMaxValue()
 //
 // @return int
 //
-int Liste::getMaxPort()
+int  ListeTemperature::getMaxPort()
 {
   const auto max = std::max_element(
       itemList.begin(),
@@ -126,7 +126,7 @@ int Liste::getMaxPort()
 //
 // @return int
 //
-int Liste::getMaxIndex()
+int  ListeTemperature::getMaxIndex()
 {
   const auto max = std::max_element(
       itemList.begin(),
@@ -142,7 +142,7 @@ int Liste::getMaxIndex()
 //
 // @return VectorItem
 //
-VectorItem Liste::items()
+VectorItem  ListeTemperature::items()
 {
   return (view == MAIN) ? itemList : filteredList;
 }
@@ -153,7 +153,7 @@ VectorItem Liste::items()
 // @param ix
 // @return ItemTemperature
 //
-ItemTemperature Liste::itemAt(int ix)
+ItemTemperature  ListeTemperature::itemAt(int ix)
 {
   const int size = itemList.size();
   if (size > ix)
@@ -168,7 +168,7 @@ ItemTemperature Liste::itemAt(int ix)
 // @return true
 // @return false
 //
-bool Liste::removeAt(const int ix)
+bool  ListeTemperature::removeAt(const int ix)
 {
   if (itemList.size() < ix)
     return false;
@@ -181,7 +181,7 @@ bool Liste::removeAt(const int ix)
 //
 // @return int
 //
-int Liste::getSize()
+int  ListeTemperature::getSize()
 {
   return itemList.size();
 }
@@ -191,7 +191,7 @@ int Liste::getSize()
 //
 // @param item
 //
-void Liste::appendItem(ItemTemperature item)
+void  ListeTemperature::appendItem(ItemTemperature item)
 {
   itemList.push_back(item);
 }
@@ -204,7 +204,7 @@ void Liste::appendItem(ItemTemperature item)
 // @return true
 // @return false
 //
-bool Liste::setItemAt(int ix, ItemTemperature item)
+bool  ListeTemperature::setItemAt(int ix, ItemTemperature item)
 {
   if (itemList.size() < ix)
   {
@@ -219,7 +219,7 @@ bool Liste::setItemAt(int ix, ItemTemperature item)
 // @brief display item at position
 //
 //
-void Liste::displayAt(int ix)
+void  ListeTemperature::displayAt(int ix)
 {
   const ItemTemperature item = items().at(ix);
   const std::string separator = "-------------------------";
@@ -237,7 +237,7 @@ void Liste::displayAt(int ix)
 // @brief display all list items
 //
 //
-void Liste::displayAll()
+void  ListeTemperature::displayAll()
 {
   const int max = items().size();
   for (int ix = 0; ix < max; ix++)
@@ -251,7 +251,7 @@ void Liste::displayAll()
 //
 // @param dir
 //
-Liste &Liste::setOrder(Directions dir)
+ListeTemperature & ListeTemperature::setOrder(Directions dir)
 {
   order = dir;
   return *this;
@@ -262,7 +262,7 @@ Liste &Liste::setOrder(Directions dir)
 //
 // @param mode
 //
-Liste &Liste::setView(Views mode)
+ListeTemperature & ListeTemperature::setView(Views mode)
 {
   view = mode;
   return *this;
@@ -272,7 +272,7 @@ Liste &Liste::setView(Views mode)
 // @brief chain method to sort list by index
 //
 //
-Liste &Liste::sortByIndex()
+ListeTemperature & ListeTemperature::sortByIndex()
 {
   const bool isAsc = (order == ASC);
   std::sort(
@@ -288,7 +288,7 @@ Liste &Liste::sortByIndex()
 // @brief chain method to sort by port
 //
 //
-Liste &Liste::sortByPort()
+ListeTemperature & ListeTemperature::sortByPort()
 {
   const bool isAsc = (order == ASC);
   std::sort(
@@ -304,7 +304,7 @@ Liste &Liste::sortByPort()
 // @brief chain method to sort by value
 //
 //
-Liste &Liste::sortByValue()
+ListeTemperature & ListeTemperature::sortByValue()
 {
   const bool isAsc = (order == ASC);
   std::sort(
@@ -320,7 +320,7 @@ Liste &Liste::sortByValue()
 // @brief multicriterias sort by port and value
 //
 //
-Liste &Liste::sortByPortAndValue()
+ListeTemperature & ListeTemperature::sortByPortAndValue()
 {
   const bool isAsc = (order == ASC);
   std::sort(
@@ -338,7 +338,7 @@ Liste &Liste::sortByPortAndValue()
 //
 // @param portNumber
 //
-Liste &Liste::filterByPort(int portFilter)
+ListeTemperature & ListeTemperature::filterByPort(int portFilter)
 {
   filteredList.clear();
   filteredList.resize(itemList.size());
@@ -355,7 +355,7 @@ Liste &Liste::filterByPort(int portFilter)
 //
 // @param valueFilter
 //
-Liste &Liste::filterByValue(int valueFilter)
+ListeTemperature & ListeTemperature::filterByValue(int valueFilter)
 {
   filteredList.clear();
   filteredList.resize(itemList.size());

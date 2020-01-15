@@ -13,7 +13,7 @@ int main()
 {
 
     Profile profiler;
-    Liste list;
+    ListeTemperature list;
     ItemTemperature item;
     Demo demo = Demo(profiler, item, list);
     demo.populateList();

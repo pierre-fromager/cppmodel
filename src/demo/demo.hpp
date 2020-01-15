@@ -5,7 +5,7 @@
 #include <string>
 #include <iostream>
 #include "../profile/profile.hpp"
-#include "../model/liste.hpp"
+#include "../model/liste_temperature.hpp"
 
 namespace cppmodel
 {
@@ -13,7 +13,7 @@ namespace cppmodel
     {
 
         public:
-            Demo(Profile &profiler, ItemTemperature &item, Liste &list);
+            Demo(Profile &profiler, ItemTemperature &item, ListeTemperature &list);
             void populateList();
             void appendItem();
             void sortByIndex();
@@ -27,7 +27,7 @@ namespace cppmodel
             void println(std::string msg);
             Profile m_profiler;
             ItemTemperature m_item;
-            Liste m_list;
+            ListeTemperature m_list;
     };
 }
 

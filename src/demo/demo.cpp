@@ -10,7 +10,7 @@ using namespace cppmodel;
 // @param item 
 // @param list 
 //
-Demo::Demo(Profile &profiler, ItemTemperature &item, Liste &list)
+Demo::Demo(Profile &profiler, ItemTemperature &item, ListeTemperature &list)
     : m_profiler(profiler), m_item(item), m_list(list)
 {
 }
@@ -72,7 +72,7 @@ void Demo::sortByIndex()
 {
     m_profiler.mark("sort index");
     println("> start sort index");
-    m_list.setOrder(Liste::DESC).sortByIndex().displayAt(0);
+    m_list.setOrder(ListeTemperature::DESC).sortByIndex().displayAt(0);
     m_profiler.elapse();
 }
 
@@ -84,7 +84,7 @@ void Demo::sortByPort()
 {
     m_profiler.mark("sort port");
     println("> start sort port");
-    m_list.setOrder(Liste::ASC).sortByPort().displayAt(0);
+    m_list.setOrder(ListeTemperature::ASC).sortByPort().displayAt(0);
     m_profiler.elapse();
 }
 
@@ -96,7 +96,7 @@ void Demo::sortByValue()
 {
     m_profiler.mark("sort value");
     println("> start sort value");
-    m_list.setOrder(Liste::ASC).sortByValue().displayAt(0);
+    m_list.setOrder(ListeTemperature::ASC).sortByValue().displayAt(0);
     m_profiler.elapse();
 }
 
@@ -133,12 +133,12 @@ void Demo::maxima()
 void Demo::filterItems()
 {
     m_profiler.mark("filters");
-    m_list.setView(Liste::MAIN).filterByValue(0).setView(Liste::FILTERED);
+    m_list.setView(ListeTemperature::MAIN).filterByValue(0).setView(ListeTemperature::FILTERED);
     int countFilteredValue = m_list.items().size();
     println("count filtered values 0 : " + std::to_string(countFilteredValue));
-    m_list.setView(Liste::MAIN).filterByPort(0).setView(Liste::FILTERED);
+    m_list.setView(ListeTemperature::MAIN).filterByPort(0).setView(ListeTemperature::FILTERED);
     const int countFilteredPort = m_list.items().size();
     println("count filteres ports 0 : " + std::to_string(countFilteredPort));
-    m_list.setView(Liste::MAIN);
+    m_list.setView(ListeTemperature::MAIN);
     m_profiler.elapse();
 }

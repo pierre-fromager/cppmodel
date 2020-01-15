@@ -15,7 +15,7 @@ namespace cppmodel
     // @brief Liste Class
     //
     //
-    class Liste
+    class ListeTemperature
     {
 
         public:
@@ -29,8 +29,8 @@ namespace cppmodel
                 MAIN,
                 FILTERED
             };
-            Liste();
-            ~Liste();
+            ListeTemperature();
+            ~ListeTemperature();
             VectorItem items();
             ItemTemperature itemAt(int ix);
             void resetAll();
@@ -46,14 +46,14 @@ namespace cppmodel
             int getMaxIndex();
             void displayAt(int ix);
             void displayAll();
-            Liste &setView(Views mode);
-            Liste &setOrder(Directions direction);
-            Liste &sortByIndex();
-            Liste &sortByPort();
-            Liste &sortByValue();
-            Liste &sortByPortAndValue();
-            Liste &filterByPort(int portFilter);
-            Liste &filterByValue(int valueFilter);
+            ListeTemperature &setView(Views mode);
+            ListeTemperature &setOrder(Directions direction);
+            ListeTemperature &sortByIndex();
+            ListeTemperature &sortByPort();
+            ListeTemperature &sortByValue();
+            ListeTemperature &sortByPortAndValue();
+            ListeTemperature &filterByPort(int portFilter);
+            ListeTemperature &filterByValue(int valueFilter);
 
         private:
             Directions order;
