@@ -2,6 +2,7 @@
 echo "Building demo model"
 g++ -g -std=c++11 src/main.cpp \
     src/demo/demo_temperature.hpp src/demo/demo_temperature.cpp \
+    src/demo/demo_templated_temperature.hpp src/demo/demo_templated_temperature.cpp \
     src/model/liste.hpp \
     src/model/liste_temperature.hpp src/model/liste_temperature.cpp \
     src/profile/profile.hpp src/profile/profile.cpp \
