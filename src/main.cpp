@@ -14,7 +14,7 @@ int main()
 
     Profile profiler;
     Liste list;
-    Item item;
+    ItemTemperature item;
     Demo demo = Demo(profiler, item, list);
     demo.populateList();
     demo.appendItem();

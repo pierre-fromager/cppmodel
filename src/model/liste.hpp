@@ -4,24 +4,12 @@
 
 #include <string>
 #include <vector>
+#include "item_temperature.hpp"
 
 namespace cppmodel
 {
 
-    //
-    // @brief item structure
-    //
-    //
-    typedef struct
-    {
-        int index;
-        int port;
-        std::string timestamp;
-        std::string type;
-        float value;
-    } Item;
-
-    typedef std::vector<Item> VectorItem;
+    typedef std::vector<ItemTemperature> VectorItem;
 
     //
     // @brief Liste Class
@@ -44,11 +32,11 @@ namespace cppmodel
             Liste();
             ~Liste();
             VectorItem items();
-            Item itemAt(int ix);
+            ItemTemperature itemAt(int ix);
             void resetAll();
             bool removeAt(int ix);
-            void appendItem(Item item);
-            bool setItemAt(int ix, Item item);
+            void appendItem(ItemTemperature item);
+            bool setItemAt(int ix, ItemTemperature item);
             int getSize();
             int getMinValue();
             int getMinPort();

@@ -13,7 +13,7 @@ namespace cppmodel
     {
 
         public:
-            Demo(Profile &profiler, Item &item, Liste &list);
+            Demo(Profile &profiler, ItemTemperature &item, Liste &list);
             void populateList();
             void appendItem();
             void sortByIndex();
@@ -26,7 +26,7 @@ namespace cppmodel
         private:
             void println(std::string msg);
             Profile m_profiler;
-            Item m_item;
+            ItemTemperature m_item;
             Liste m_list;
     };
 }

@@ -10,7 +10,7 @@ using namespace cppmodel;
 // @param item 
 // @param list 
 //
-Demo::Demo(Profile &profiler, Item &item, Liste &list)
+Demo::Demo(Profile &profiler, ItemTemperature &item, Liste &list)
     : m_profiler(profiler), m_item(item), m_list(list)
 {
 }

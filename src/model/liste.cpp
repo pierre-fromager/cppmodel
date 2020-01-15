@@ -51,7 +51,7 @@ int Liste::getMinValue()
   const auto min = std::min_element(
       itemList.begin(),
       itemList.end(),
-      [](const Item &i1, const Item &i2) {
+      [](const ItemTemperature &i1, const ItemTemperature &i2) {
         return i1.value < i2.value;
       });
   return min->value;
@@ -67,7 +67,7 @@ int Liste::getMinPort()
   const auto min = std::min_element(
       itemList.begin(),
       itemList.end(),
-      [](const Item &i1, const Item &i2) {
+      [](const ItemTemperature &i1, const ItemTemperature &i2) {
         return i1.port < i2.port;
       });
   return min->port;
@@ -83,7 +83,7 @@ int Liste::getMinIndex()
   const auto min = std::min_element(
       itemList.begin(),
       itemList.end(),
-      [](const Item &i1, const Item &i2) {
+      [](const ItemTemperature &i1, const ItemTemperature &i2) {
         return i1.index < i2.index;
       });
   return min->index;
@@ -99,7 +99,7 @@ int Liste::getMaxValue()
   const auto max = std::max_element(
       itemList.begin(),
       itemList.end(),
-      [](const Item &i1, const Item &i2) {
+      [](const ItemTemperature &i1, const ItemTemperature &i2) {
         return i1.value < i2.value;
       });
   return max->value;
@@ -115,7 +115,7 @@ int Liste::getMaxPort()
   const auto max = std::max_element(
       itemList.begin(),
       itemList.end(),
-      [](const Item &i1, const Item &i2) {
+      [](const ItemTemperature &i1, const ItemTemperature &i2) {
         return i1.port < i2.port;
       });
   return max->port;
@@ -131,7 +131,7 @@ int Liste::getMaxIndex()
   const auto max = std::max_element(
       itemList.begin(),
       itemList.end(),
-      [](const Item &i1, const Item &i2) {
+      [](const ItemTemperature &i1, const ItemTemperature &i2) {
         return i1.index < i2.index;
       });
   return max->index;
@@ -151,9 +151,9 @@ VectorItem Liste::items()
 // @brief get temperature item at position
 //
 // @param ix
-// @return Item
+// @return ItemTemperature
 //
-Item Liste::itemAt(int ix)
+ItemTemperature Liste::itemAt(int ix)
 {
   const int size = itemList.size();
   if (size > ix)
@@ -191,7 +191,7 @@ int Liste::getSize()
 //
 // @param item
 //
-void Liste::appendItem(Item item)
+void Liste::appendItem(ItemTemperature item)
 {
   itemList.push_back(item);
 }
@@ -204,7 +204,7 @@ void Liste::appendItem(Item item)
 // @return true
 // @return false
 //
-bool Liste::setItemAt(int ix, Item item)
+bool Liste::setItemAt(int ix, ItemTemperature item)
 {
   if (itemList.size() < ix)
   {
@@ -221,7 +221,7 @@ bool Liste::setItemAt(int ix, Item item)
 //
 void Liste::displayAt(int ix)
 {
-  const Item item = items().at(ix);
+  const ItemTemperature item = items().at(ix);
   const std::string separator = "-------------------------";
   std::cout << separator << std::endl;
   std::cout << "- index " << item.index << std::endl;
@@ -278,7 +278,7 @@ Liste &Liste::sortByIndex()
   std::sort(
       itemList.begin(),
       itemList.end(),
-      [isAsc](const Item &i1, const Item &i2) {
+      [isAsc](const ItemTemperature &i1, const ItemTemperature &i2) {
         return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
       });
   return *this;
@@ -294,7 +294,7 @@ Liste &Liste::sortByPort()
   std::sort(
       itemList.begin(),
       itemList.end(),
-      [isAsc](const Item &i1, const Item &i2) {
+      [isAsc](const ItemTemperature &i1, const ItemTemperature &i2) {
         return (isAsc) ? (i1.port < i2.port) : (i1.port > i2.port);
       });
   return *this;
@@ -310,7 +310,7 @@ Liste &Liste::sortByValue()
   std::sort(
       itemList.begin(),
       itemList.end(),
-      [isAsc](const Item &i1, const Item &i2) {
+      [isAsc](const ItemTemperature &i1, const ItemTemperature &i2) {
         return (isAsc) ? (i1.value < i2.value) : (i1.value > i2.value);
       });
   return *this;
@@ -326,7 +326,7 @@ Liste &Liste::sortByPortAndValue()
   std::sort(
       itemList.begin(),
       itemList.end(),
-      [isAsc](const Item &i1, const Item &i2) {
+      [isAsc](const ItemTemperature &i1, const ItemTemperature &i2) {
         return (isAsc)
                    ? std::tie(i1.port, i1.value) < std::tie(i2.port, i2.value)
                    : std::tie(i1.port, i1.value) > std::tie(i2.port, i2.value);
@@ -346,7 +346,7 @@ Liste &Liste::filterByPort(int portFilter)
       itemList.begin(),
       itemList.end(),
       std::back_inserter(filteredList),
-      [portFilter](const Item &i) { return i.port == portFilter; });
+      [portFilter](const ItemTemperature &i) { return i.port == portFilter; });
   return *this;
 }
 
@@ -363,6 +363,6 @@ Liste &Liste::filterByValue(int valueFilter)
       itemList.begin(),
       itemList.end(),
       std::back_inserter(filteredList),
-      [valueFilter](const Item &i) { return i.value == valueFilter; });
+      [valueFilter](const ItemTemperature &i) { return i.value == valueFilter; });
   return *this;
 }
