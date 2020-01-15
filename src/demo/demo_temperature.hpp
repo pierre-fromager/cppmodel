@@ -1,6 +1,6 @@
 
-#ifndef CPPMODEL_DEMO_HPP
-#define CPPMODEL_DEMO_HPP
+#ifndef CPPMODEL_DEMO_TEMPERATURE_HPP
+#define CPPMODEL_DEMO_TEMPERATURE_HPP
 
 #include <string>
 #include <iostream>
@@ -9,11 +9,11 @@
 
 namespace cppmodel
 {
-    class Demo
+    class DemoTemperature
     {
 
         public:
-            Demo(Profile &profiler, ItemTemperature &item, ListeTemperature &list);
+            DemoTemperature(Profile &profiler, ItemTemperature &item, ListeTemperature &list);
             void populateList();
             void appendItem();
             void sortByIndex();

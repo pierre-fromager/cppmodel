@@ -51,6 +51,7 @@ public:
     void displayAll();
     Liste &setView(Views mode);
     Liste &setOrder(Directions direction);
+    Liste &sortBy(const std::string name);
     Liste &sortByIndex();
     Liste &sortByPort();
     Liste &sortByValue();
@@ -245,17 +246,18 @@ bool Liste<Item, VectorItem>::removeAt(const int ix)
 
 //
 // @brief remove last element
-// 
-// @tparam Item 
-// @tparam VectorItem 
+//
+// @tparam Item
+// @tparam VectorItem
 //
 template <typename Item, typename VectorItem>
-void Liste<Item,VectorItem>::pop ()
+void Liste<Item, VectorItem>::pop()
 {
-    if (itemList.empty()) {
+    if (itemList.empty())
+    {
         throw std::out_of_range("Liste<>::pop(): empty stack");
     }
-    itemList.pop_back(); 
+    itemList.pop_back();
 }
 
 //
@@ -354,6 +356,23 @@ template <typename Item, typename VectorItem>
 Liste<Item, VectorItem> &Liste<Item, VectorItem>::setView(Views mode)
 {
     view = mode;
+    return *this;
+}
+
+//
+// @brief chain method to sort list by a name prop
+//
+//
+template <typename Item, typename VectorItem>
+Liste<Item, VectorItem> &Liste<Item, VectorItem>::sortBy(const std::string name)
+{
+    const bool isAsc = (order == ASC);
+    std::sort(
+        itemList.begin(),
+        itemList.end(),
+        [isAsc, name](const Item &i1, const Item &i2) {
+            return (isAsc) ? (i1[name] < i2[name]) : (i1[name] > i2[name]);
+        });
     return *this;
 }
 

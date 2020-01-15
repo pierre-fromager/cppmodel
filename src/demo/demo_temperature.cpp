@@ -1,5 +1,5 @@
 
-#include "demo.hpp"
+#include "demo_temperature.hpp"
 
 using namespace cppmodel;
 
@@ -10,7 +10,7 @@ using namespace cppmodel;
 // @param item 
 // @param list 
 //
-Demo::Demo(Profile &profiler, ItemTemperature &item, ListeTemperature &list)
+DemoTemperature::DemoTemperature(Profile &profiler, ItemTemperature &item, ListeTemperature &list)
     : m_profiler(profiler), m_item(item), m_list(list)
 {
 }
@@ -20,7 +20,7 @@ Demo::Demo(Profile &profiler, ItemTemperature &item, ListeTemperature &list)
 //
 // @param msg 
 //
-void Demo::println(std::string msg)
+void DemoTemperature::println(std::string msg)
 {
     std::cout << msg << std::endl;
 }
@@ -29,7 +29,7 @@ void Demo::println(std::string msg)
 // @brief populate list
 //
 //
-void Demo::populateList()
+void DemoTemperature::populateList()
 {
     m_profiler.mark("generation");
     std::cout << std::endl
@@ -52,7 +52,7 @@ void Demo::populateList()
 // @brief append a single item to the list
 //
 //
-void Demo::appendItem()
+void DemoTemperature::appendItem()
 {
     m_profiler.mark("append item");
     m_item.index = 1000;
@@ -68,7 +68,7 @@ void Demo::appendItem()
 // @brief sort by index order desc
 //
 //
-void Demo::sortByIndex()
+void DemoTemperature::sortByIndex()
 {
     m_profiler.mark("sort index");
     println("> start sort index");
@@ -80,7 +80,7 @@ void Demo::sortByIndex()
 // @brief sort by port order asc
 //
 //
-void Demo::sortByPort()
+void DemoTemperature::sortByPort()
 {
     m_profiler.mark("sort port");
     println("> start sort port");
@@ -92,7 +92,7 @@ void Demo::sortByPort()
 // @brief sort by value order asc
 //
 //
-void Demo::sortByValue()
+void DemoTemperature::sortByValue()
 {
     m_profiler.mark("sort value");
     println("> start sort value");
@@ -104,7 +104,7 @@ void Demo::sortByValue()
 // @brief display minima for index,port,value
 //
 //
-void Demo::minima()
+void DemoTemperature::minima()
 {
     m_profiler.mark("minima");
     println("min index " + std::to_string(m_list.getMinIndex()));
@@ -117,7 +117,7 @@ void Demo::minima()
 // @brief display maxima for index,port,value
 //
 //
-void Demo::maxima()
+void DemoTemperature::maxima()
 {
     m_profiler.mark("maxima");
     println("max index " + std::to_string(m_list.getMaxIndex()));
@@ -130,7 +130,7 @@ void Demo::maxima()
 // @brief count filtered by port then by value
 //
 //
-void Demo::filterItems()
+void DemoTemperature::filterItems()
 {
     m_profiler.mark("filters");
     m_list.setView(ListeTemperature::MAIN).filterByValue(0).setView(ListeTemperature::FILTERED);

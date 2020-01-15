@@ -1,6 +1,6 @@
 
 #include <iostream>
-#include "demo/demo.hpp"
+#include "demo/demo_temperature.hpp"
 
 using namespace cppmodel;
 
@@ -15,7 +15,7 @@ int main()
     Profile profiler;
     ListeTemperature list;
     ItemTemperature item;
-    Demo demo = Demo(profiler, item, list);
+    DemoTemperature demo = DemoTemperature(profiler, item, list);
     demo.populateList();
     demo.appendItem();
     std::cout << std::endl
