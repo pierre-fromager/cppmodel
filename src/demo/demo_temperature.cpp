@@ -27,32 +27,36 @@ void DemoTemperature::println(std::string msg)
 }
 
 //
+// @brief print message with a new line
+//
+// @param msg
+//
+void DemoTemperature::printTitle(std::string msg)
+{
+    std::cout << std::endl
+              << terminal::ansi::fgbold_red
+              << msg << terminal::ansi::reset << std::endl;
+}
+
+//
 // @brief run demo
 //
 //
 void DemoTemperature::run(){
+    printTitle("> generate");
     populateList();
     appendItem();
-    std::cout << std::endl << terminal::ansi::fg_red
-              << "> start sorting" << std::endl
-              << terminal::ansi::reset << std::endl;
+    printTitle("> sorts");
     sortByIndex();
     sortByPort();
     sortByValue();
-    std::cout << std::endl << terminal::ansi::fg_red
-              << "> start minima" << std::endl
-              << terminal::ansi::reset << std::endl;
+    printTitle("> minima");
     minima();
-    std::cout << std::endl << terminal::ansi::fg_red
-              << "> start maxima" << std::endl
-              << terminal::ansi::reset << std::endl;
+    printTitle("> maxima");
     maxima();
-    std::cout << std::endl << terminal::ansi::fg_red
-              << "> start filtering" << std::endl
-              << terminal::ansi::reset << std::endl;
+    printTitle("> filters");
     filterItems();
 }
-
 
 //
 // @brief populate list
@@ -61,8 +65,6 @@ void DemoTemperature::run(){
 void DemoTemperature::populateList()
 {
     m_profiler.mark("generation");
-    std::cout << std::endl
-              << "> start generation" << std::endl;
     const int itemAmount = 1000000;
     for (int i = 0; i < itemAmount; i++)
     {

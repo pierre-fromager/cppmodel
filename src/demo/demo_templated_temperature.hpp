@@ -20,6 +20,7 @@ namespace cppmodel
 
         private:
             void println(std::string msg);
+            void printTitle(std::string msg);
             void populateList();
             void appendItem();
             void sortByIndex();

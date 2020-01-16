@@ -48,6 +48,12 @@ constexpr std::basic_ostream<CharT, Traits> &fg_red(std::basic_ostream<CharT, Tr
 }
 
 template <class CharT, class Traits>
+constexpr std::basic_ostream<CharT, Traits> &fgbold_red(std::basic_ostream<CharT, Traits> &os)
+{
+    return os << ANSI_BOLDRED;
+}
+
+template <class CharT, class Traits>
 constexpr std::basic_ostream<CharT, Traits> &fg_green(std::basic_ostream<CharT, Traits> &os)
 {
     return os << ANSI_GREEN;
@@ -82,6 +88,8 @@ constexpr std::basic_ostream<CharT, Traits> &fg_white(std::basic_ostream<CharT, 
 {
     return os << ANSI_WHITE;
 }
+
+
 
 } // namespace ansi
 } // namespace terminal
