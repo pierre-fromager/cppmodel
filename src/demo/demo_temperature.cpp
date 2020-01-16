@@ -26,6 +26,34 @@ void DemoTemperature::println(std::string msg)
 }
 
 //
+// @brief run demo
+//
+//
+void DemoTemperature::run(){
+    populateList();
+    appendItem();
+    std::cout << std::endl
+              << "> start sorting" << std::endl
+              << std::endl;
+    sortByIndex();
+    sortByPort();
+    sortByValue();
+    std::cout << std::endl
+              << "> start minima" << std::endl
+              << std::endl;
+    minima();
+    std::cout << std::endl
+              << "> start maxima" << std::endl
+              << std::endl;
+    maxima();
+    std::cout << std::endl
+              << "> start filtering" << std::endl
+              << std::endl;
+    filterItems();
+}
+
+
+//
 // @brief populate list
 //
 //

@@ -6,9 +6,9 @@ using namespace cppmodel;
 //
 // @brief Construct a new Demo:: Demo object
 //
-// @param profiler 
-// @param item 
-// @param list 
+// @param profiler
+// @param item
+// @param list
 //
 DemoTemplatedTemperature::DemoTemplatedTemperature(Profile &profiler, ItemTemperature &item, Liste<ItemTemperature> &list)
     : m_profiler(profiler), m_item(item), m_list(list)
@@ -18,11 +18,40 @@ DemoTemplatedTemperature::DemoTemplatedTemperature(Profile &profiler, ItemTemper
 //
 // @brief print message with a new line
 //
-// @param msg 
+// @param msg
 //
 void DemoTemplatedTemperature::println(std::string msg)
 {
     std::cout << msg << std::endl;
+}
+
+//
+// @brief print message with a new line
+//
+// @param msg
+//
+void DemoTemplatedTemperature::run()
+{
+    populateList();
+    appendItem();
+    std::cout << std::endl
+              << "> start sorting" << std::endl
+              << std::endl;
+    sortByIndex();
+    sortByPort();
+    sortByValue();
+    std::cout << std::endl
+              << "> start minima" << std::endl
+              << std::endl;
+    minima();
+    std::cout << std::endl
+              << "> start maxima" << std::endl
+              << std::endl;
+    maxima();
+    std::cout << std::endl
+              << "> start filtering" << std::endl
+              << std::endl;
+    filterItems();
 }
 
 //
@@ -38,10 +67,10 @@ void DemoTemplatedTemperature::populateList()
     for (int i = 0; i < itemAmount; i++)
     {
         m_item.index = i;
-        m_item.port = i % 4;// 0..4
+        m_item.port = i % 4; // 0..4
         m_item.timestamp = "2020-01-0" + std::to_string(i % 30);
         m_item.type = "temperature";
-        m_item.value = rand() % 100;// 0..100
+        m_item.value = rand() % 100; // 0..100
         m_list.appendItem(m_item);
     }
     println("> Liste size : " + std::to_string(m_list.getSize()));
@@ -72,7 +101,9 @@ void DemoTemplatedTemperature::sortByIndex()
 {
     m_profiler.mark("sort index");
     println("> start sort index");
-    m_list.setOrder(Liste<ItemTemperature>::DESC).sortByIndex().displayAt(0);
+    //m_list.setOrder(Liste<ItemTemperature>::DESC).sortByIndex().displayAt(0);
+    const std::string key = "index";
+    m_list.setOrder(Liste<ItemTemperature>::DESC).sortBy(key).displayAt(0);
     m_profiler.elapse();
 }
 

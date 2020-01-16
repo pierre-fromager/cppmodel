@@ -6,6 +6,12 @@
 
 namespace cppmodel
 {
+
+    struct Mem {
+        double vm;
+        double rss;
+    };
+
     class Profile
     {
 
@@ -13,10 +19,13 @@ namespace cppmodel
         Profile();
         void mark(std::string msg);
         void elapse();
+        void mem(Mem &mark);
 
     private:
         double microtime();
         double in;
+        Mem mem_in;
+        Mem mem_out;
         std::string msg;
     };
 }

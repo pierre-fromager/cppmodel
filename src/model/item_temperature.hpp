@@ -12,14 +12,14 @@ namespace cppmodel
     // @brief item structure
     //
     //
-    typedef struct
+    struct ItemTemperature
     {
         int index;
         int port;
         std::string timestamp;
         std::string type;
         float value;
-    } ItemTemperature;
+    };
 
-}
+} // namespace cppmodel
 #endif

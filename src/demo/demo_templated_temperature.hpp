@@ -15,6 +15,10 @@ namespace cppmodel
 
         public:
             DemoTemplatedTemperature(Profile &profiler, ItemTemperature &item, Liste<ItemTemperature> &list);
+            void run();
+
+        private:
+            void println(std::string msg);
             void populateList();
             void appendItem();
             void sortByIndex();
@@ -23,9 +27,6 @@ namespace cppmodel
             void minima();
             void maxima();
             void filterItems();
-
-        private:
-            void println(std::string msg);
             Profile m_profiler;
             ItemTemperature m_item;
             Liste<ItemTemperature> m_list;

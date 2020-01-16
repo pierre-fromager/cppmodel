@@ -364,14 +364,20 @@ Liste<Item, VectorItem> &Liste<Item, VectorItem>::setView(Views mode)
 //
 //
 template <typename Item, typename VectorItem>
-Liste<Item, VectorItem> &Liste<Item, VectorItem>::sortBy(const std::string name)
+Liste<Item, VectorItem> &Liste<Item, VectorItem>::sortBy(std::string name)
 {
     const bool isAsc = (order == ASC);
+    const std::string prop = name;
+    
     std::sort(
         itemList.begin(),
         itemList.end(),
-        [isAsc, name](const Item &i1, const Item &i2) {
-            return (isAsc) ? (i1[name] < i2[name]) : (i1[name] > i2[name]);
+        [isAsc, prop]( Item &i1,  Item &i2) {
+            //int ptrProp = Item::*p;
+            //p = &Item::prop;
+            //int* ptrToC2 =  &(i2->prop);
+            return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
+            //return (isAsc) ? (i1->*p < i2->*p) : (i1->*p > i2->*p);
         });
     return *this;
 }

@@ -15,55 +15,16 @@ int main()
 {
 
     Profile profiler;
-    ListeTemperature listTemp;
     ItemTemperature item;
+
+    ListeTemperature listTemp;
     DemoTemperature demo = DemoTemperature(profiler, item, listTemp);
+    demo.run();
 
     Liste<ItemTemperature> listTemplated;
     DemoTemplatedTemperature demoTemplated = DemoTemplatedTemperature(
         profiler, item, listTemplated);
-
-    demo.populateList();
-    demo.appendItem();
-    std::cout << std::endl
-              << "> start sorting" << std::endl
-              << std::endl;
-    demo.sortByIndex();
-    demo.sortByPort();
-    demo.sortByValue();
-    std::cout << std::endl
-              << "> start minima" << std::endl
-              << std::endl;
-    demo.minima();
-    std::cout << std::endl
-              << "> start maxima" << std::endl
-              << std::endl;
-    demo.maxima();
-    std::cout << std::endl
-              << "> start filtering" << std::endl
-              << std::endl;
-    demo.filterItems();
-
-    demoTemplated.populateList();
-    demoTemplated.appendItem();
-    std::cout << std::endl
-              << "> start sorting" << std::endl
-              << std::endl;
-    demoTemplated.sortByIndex();
-    demoTemplated.sortByPort();
-    demoTemplated.sortByValue();
-    std::cout << std::endl
-              << "> start minima" << std::endl
-              << std::endl;
-    demoTemplated.minima();
-    std::cout << std::endl
-              << "> start maxima" << std::endl
-              << std::endl;
-    demoTemplated.maxima();
-    std::cout << std::endl
-              << "> start filtering" << std::endl
-              << std::endl;
-    demoTemplated.filterItems();
+    demoTemplated.run();
 
     return 0;
 }
