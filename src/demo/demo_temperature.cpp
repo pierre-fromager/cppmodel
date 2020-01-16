@@ -47,7 +47,7 @@ void DemoTemperature::run(){
     populateList();
     appendItem();
     printTitle("> sorts");
-    sortByIndex();
+    //sortByIndex();
     sortByPort();
     sortByValue();
     printTitle("> minima");
@@ -75,6 +75,10 @@ void DemoTemperature::populateList()
         m_item.value = rand() % 100;// 0..100
         m_list.appendItem(m_item);
     }
+    println("* First item");
+    m_list.displayAt(0);
+    println("* Last item");
+    m_list.displayAt(m_list.getSize() - 1);
     println("> Liste size : " + std::to_string(m_list.getSize()));
     m_profiler.elapse();
 }

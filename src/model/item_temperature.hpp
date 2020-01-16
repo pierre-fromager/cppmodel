@@ -14,11 +14,11 @@ namespace cppmodel
     //
     struct ItemTemperature
     {
-        unsigned int index;
-        unsigned int port;
+        int index;
+        int port;
         std::string timestamp;
         std::string type;
-        unsigned int value;
+        int value;
     };
 
 } // namespace cppmodel
