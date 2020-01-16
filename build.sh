@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Building demo model"
-g++ -g -std=c++11 src/main.cpp \
+/usr/bin/g++-6 -g -std=c++11 src/main.cpp \
     src/terminal/ansi.hpp \
     src/demo/demo_temperature.hpp src/demo/demo_temperature.cpp \
     src/demo/demo_templated_temperature.hpp src/demo/demo_templated_temperature.cpp \
