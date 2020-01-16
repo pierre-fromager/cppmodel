@@ -1,6 +1,7 @@
 
 #include "demo_temperature.hpp"
 
+
 using namespace cppmodel;
 
 //
@@ -32,23 +33,23 @@ void DemoTemperature::println(std::string msg)
 void DemoTemperature::run(){
     populateList();
     appendItem();
-    std::cout << std::endl
+    std::cout << std::endl << terminal::ansi::fg_red
               << "> start sorting" << std::endl
-              << std::endl;
+              << terminal::ansi::reset << std::endl;
     sortByIndex();
     sortByPort();
     sortByValue();
-    std::cout << std::endl
+    std::cout << std::endl << terminal::ansi::fg_red
               << "> start minima" << std::endl
-              << std::endl;
+              << terminal::ansi::reset << std::endl;
     minima();
-    std::cout << std::endl
+    std::cout << std::endl << terminal::ansi::fg_red
               << "> start maxima" << std::endl
-              << std::endl;
+              << terminal::ansi::reset << std::endl;
     maxima();
-    std::cout << std::endl
+    std::cout << std::endl << terminal::ansi::fg_red
               << "> start filtering" << std::endl
-              << std::endl;
+              << terminal::ansi::reset << std::endl;
     filterItems();
 }
 

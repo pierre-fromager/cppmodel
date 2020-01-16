@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include <chrono>
 #include "profile.hpp"
+#include "../terminal/ansi.hpp"
 
 using namespace cppmodel;
 
@@ -24,7 +25,7 @@ void Profile::mark(std::string markerMsg)
 {
     msg = markerMsg;
     in = microtime();
-    mem(mem_in); 
+    mem(mem_in);
 }
 
 //
@@ -34,9 +35,17 @@ void Profile::mark(std::string markerMsg)
 void Profile::elapse()
 {
     mem(mem_out);
-    std::cout << "+  Profile " << msg << " : " << microtime() - in << "s" << std::endl;
-    std::cout << "+  Profile mem vm  " << msg << " : " << mem_out.vm - mem_in.vm << "kb" << std::endl;
-    std::cout << "+  Profile mem res " << msg << " : " << mem_out.rss - mem_in.rss << "kb" << std::endl;
+    std::cout << terminal::ansi::fg_white
+              << "+  Profile " << msg << " : " << microtime() - in
+              << "s" << terminal::ansi::reset << std::endl;
+    std::cout << terminal::ansi::fg_cyan
+              << "+  Profile mem vm  "
+              << msg << " : " << mem_out.vm - mem_in.vm << "kb"
+              << terminal::ansi::reset << std::endl;
+    std::cout << terminal::ansi::fg_yellow
+              << "+  Profile mem res "
+              << msg << " : " << mem_out.rss - mem_in.rss << "kb"
+              << terminal::ansi::reset << std::endl;
 }
 
 /**

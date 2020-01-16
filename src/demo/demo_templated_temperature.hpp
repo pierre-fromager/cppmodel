@@ -6,7 +6,8 @@
 #include <iostream>
 #include "../profile/profile.hpp"
 #include "../model/item_temperature.hpp"
-#include "../model/liste.hpp"
+#include "../model/liste_template.hpp"
+#include "../terminal/ansi.hpp"
 
 namespace cppmodel
 {
@@ -14,7 +15,7 @@ namespace cppmodel
     {
 
         public:
-            DemoTemplatedTemperature(Profile &profiler, ItemTemperature &item, Liste<ItemTemperature> &list);
+            DemoTemplatedTemperature(Profile &profiler, ItemTemperature &item, ListeTemplate<ItemTemperature> &list);
             void run();
 
         private:
@@ -29,7 +30,7 @@ namespace cppmodel
             void filterItems();
             Profile m_profiler;
             ItemTemperature m_item;
-            Liste<ItemTemperature> m_list;
+            ListeTemplate<ItemTemperature> m_list;
     };
 }
 

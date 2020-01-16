@@ -10,7 +10,7 @@ using namespace cppmodel;
 // @param item
 // @param list
 //
-DemoTemplatedTemperature::DemoTemplatedTemperature(Profile &profiler, ItemTemperature &item, Liste<ItemTemperature> &list)
+DemoTemplatedTemperature::DemoTemplatedTemperature(Profile &profiler, ItemTemperature &item, ListeTemplate<ItemTemperature> &list)
     : m_profiler(profiler), m_item(item), m_list(list)
 {
 }
@@ -35,22 +35,26 @@ void DemoTemplatedTemperature::run()
     populateList();
     appendItem();
     std::cout << std::endl
+              << terminal::ansi::fg_red
               << "> start sorting" << std::endl
-              << std::endl;
+              << terminal::ansi::reset << std::endl;
     sortByIndex();
     sortByPort();
     sortByValue();
     std::cout << std::endl
+              << terminal::ansi::fg_red
               << "> start minima" << std::endl
-              << std::endl;
+              << terminal::ansi::reset << std::endl;
     minima();
     std::cout << std::endl
+              << terminal::ansi::fg_red
               << "> start maxima" << std::endl
-              << std::endl;
+              << terminal::ansi::reset << std::endl;
     maxima();
     std::cout << std::endl
+              << terminal::ansi::fg_red
               << "> start filtering" << std::endl
-              << std::endl;
+              << terminal::ansi::reset << std::endl;
     filterItems();
 }
 
@@ -103,7 +107,7 @@ void DemoTemplatedTemperature::sortByIndex()
     println("> start sort index");
     //m_list.setOrder(Liste<ItemTemperature>::DESC).sortByIndex().displayAt(0);
     const std::string key = "index";
-    m_list.setOrder(Liste<ItemTemperature>::DESC).sortBy(key).displayAt(0);
+    m_list.setOrder(ListeTemplate<ItemTemperature>::DESC).sortBy(key).displayAt(0);
     m_profiler.elapse();
 }
 
@@ -115,7 +119,7 @@ void DemoTemplatedTemperature::sortByPort()
 {
     m_profiler.mark("sort port");
     println("> start sort port");
-    m_list.setOrder(Liste<ItemTemperature>::ASC).sortByPort().displayAt(0);
+    m_list.setOrder(ListeTemplate<ItemTemperature>::ASC).sortByPort().displayAt(0);
     m_profiler.elapse();
 }
 
@@ -127,7 +131,7 @@ void DemoTemplatedTemperature::sortByValue()
 {
     m_profiler.mark("sort value");
     println("> start sort value");
-    m_list.setOrder(Liste<ItemTemperature>::ASC).sortByValue().displayAt(0);
+    m_list.setOrder(ListeTemplate<ItemTemperature>::ASC).sortByValue().displayAt(0);
     m_profiler.elapse();
 }
 
@@ -164,12 +168,18 @@ void DemoTemplatedTemperature::maxima()
 void DemoTemplatedTemperature::filterItems()
 {
     m_profiler.mark("filters");
-    m_list.setView(Liste<ItemTemperature>::MAIN).filterByValue(0).setView(Liste<ItemTemperature>::FILTERED);
+    m_list
+        .setView(ListeTemplate<ItemTemperature>::MAIN)
+        .filterByValue(0)
+        .setView(ListeTemplate<ItemTemperature>::FILTERED);
     int countFilteredValue = m_list.items().size();
     println("count filtered values 0 : " + std::to_string(countFilteredValue));
-    m_list.setView(Liste<ItemTemperature>::MAIN).filterByPort(0).setView(Liste<ItemTemperature>::FILTERED);
+    m_list
+        .setView(ListeTemplate<ItemTemperature>::MAIN)
+        .filterByPort(0)
+        .setView(ListeTemplate<ItemTemperature>::FILTERED);
     const int countFilteredPort = m_list.items().size();
     println("count filteres ports 0 : " + std::to_string(countFilteredPort));
-    m_list.setView(Liste<ItemTemperature>::MAIN);
+    m_list.setView(ListeTemplate<ItemTemperature>::MAIN);
     m_profiler.elapse();
 }

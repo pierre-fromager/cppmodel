@@ -2,7 +2,9 @@
 #include <iostream>
 #include "demo/demo_temperature.hpp"
 #include "demo/demo_templated_temperature.hpp"
-#include "model/liste.hpp"
+#include "model/liste_template.hpp"
+#include <algorithm>
+#include <functional>
 
 using namespace cppmodel;
 
@@ -21,7 +23,7 @@ int main()
     DemoTemperature demo = DemoTemperature(profiler, item, listTemp);
     demo.run();
 
-    Liste<ItemTemperature> listTemplated;
+    ListeTemplate<ItemTemperature> listTemplated;
     DemoTemplatedTemperature demoTemplated = DemoTemplatedTemperature(
         profiler, item, listTemplated);
     demoTemplated.run();

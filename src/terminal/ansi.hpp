@@ -26,7 +26,6 @@ namespace cppmodel
 {
 namespace terminal
 {
-
 namespace ansi
 {
 
