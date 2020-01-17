@@ -3,7 +3,7 @@
 COMPILO=/usr/bin/g++-6
 #DEBUGOPT="-g"
 DEBUGOPT=""
-CPPSTD="-std=c++11"
+CPPSTD="-std=c++17"
 GLOBOPT="-Wall -Wextra";
 echo "Building demo model g++"
 

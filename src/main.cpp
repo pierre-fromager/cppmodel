@@ -2,7 +2,7 @@
 #include "profile/profile.hpp"
 #include "demo/demo_generic.hpp"
 #include "demo/demo_specific.hpp"
-#include "model/liste.tcc"
+#include "model/liste_generic.tcc"
 
 using namespace cppmodel;
 
