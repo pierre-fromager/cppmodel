@@ -52,7 +52,9 @@ public:
     void displayAll();
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
-    ListeTemplate &sortBy(const std::function<bool(Item i1, Item i2)> &comparator);
+    ListeTemplate &setSortComparator(
+        const std::function<bool(Item i1, Item i2)> &comparator);
+    ListeTemplate &sortByComparator();
     ListeTemplate &sortByIndex();
     ListeTemplate &sortByPort();
     ListeTemplate &sortByValue();
@@ -61,6 +63,8 @@ public:
     ListeTemplate &filterByValue(int valueFilter);
 
 private:
+    std::function<bool(Item, Item)> sortComparator;
+    //std::function<bool(Item i1, Item i2) &filterComparator();
     Directions order;
     Views view;
     VectorItem itemList;
@@ -383,10 +387,20 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortBy(std::st
 }*/
 
 template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortBy(const std::function<bool(Item, Item)> &comparator)
+ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByComparator()
 {
     //const bool isAsc = (order == ASC);
-    std::sort(itemList.begin(), itemList.end(), comparator);
+    std::sort(itemList.begin(), itemList.end(), sortComparator);
+    return *this;
+}
+
+template <typename Item, typename VectorItem>
+ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setSortComparator(
+    const std::function<bool(Item i1, Item i2)> &comparator)
+{
+    //const bool isAsc = (order == ASC);
+    //std::sort(itemList.begin(), itemList.end(), sortComparator);
+    sortComparator = comparator;
     return *this;
 }
 

@@ -104,14 +104,14 @@ void DemoTemplatedTemperature::sortByIndex()
 {
     m_profiler.mark("sort index");
     println("> start sort index");
-    const std::function<bool(ItemTemperature,ItemTemperature)> comparator = [](
-        const ItemTemperature &i1,const ItemTemperature &i2
-        ) {
-        return (i1.index < i2.index);
-    };
     m_list
         .setOrder(ListeTemplate<ItemTemperature>::DESC)
-        .sortBy(comparator)
+        .setSortComparator(
+            [](
+                const ItemTemperature &i1, const ItemTemperature &i2) {
+                return (&i1.index < &i2.index);
+            })
+        .sortByComparator()
         .displayAt(0);
     m_profiler.elapse();
 }
