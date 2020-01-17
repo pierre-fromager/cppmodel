@@ -1,12 +1,14 @@
 #!/bin/bash
-echo "Building demo model"
-/usr/bin/g++-6 -g -std=c++11 src/main.cpp \
-    src/terminal/ansi.hpp \
-    src/demo/demo_temperature.hpp src/demo/demo_temperature.cpp \
-    src/demo/demo_templated_temperature.hpp src/demo/demo_templated_temperature.cpp \
-    src/model/liste_template.hpp \
-    src/model/liste_temperature.hpp src/model/liste_temperature.cpp \
-    src/profile/profile.hpp src/profile/profile.cpp \
+COMPILO=/usr/bin/g++-6
+echo "Building demo model g++"
+
+$COMPILO -g -std=c++11 -Wall -Wextra \
+    src/main.cpp \
+    src/model/liste_temperature.cpp \
+    src/profile/profile.cpp \
+    src/demo/demo_temperature.cpp \
+    src/demo/demo_templated_temperature.cpp \
     -o build/demo
+
 echo "Compilation completed"
 echo "Runtime is ./build/demo"

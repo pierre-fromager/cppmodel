@@ -153,9 +153,9 @@ VectorItem ListeTemperature::items()
 // @param ix
 // @return ItemTemperature
 //
-ItemTemperature ListeTemperature::itemAt(int ix)
+ItemTemperature ListeTemperature::itemAt(unsigned int ix)
 {
-  const int size = itemList.size();
+  const unsigned int size = itemList.size();
   if (size > ix)
     ix = size;
   return itemList.at(ix);
@@ -168,7 +168,7 @@ ItemTemperature ListeTemperature::itemAt(int ix)
 // @return true
 // @return false
 //
-bool ListeTemperature::removeAt(const int ix)
+bool ListeTemperature::removeAt(const unsigned int ix)
 {
   if (itemList.size() < ix)
     return false;
@@ -204,7 +204,7 @@ void ListeTemperature::appendItem(ItemTemperature item)
 // @return true
 // @return false
 //
-bool ListeTemperature::setItemAt(int ix, ItemTemperature item)
+bool ListeTemperature::setItemAt(unsigned int ix, ItemTemperature item)
 {
   if (itemList.size() < ix)
   {
@@ -219,7 +219,7 @@ bool ListeTemperature::setItemAt(int ix, ItemTemperature item)
 // @brief display item at position
 //
 //
-void ListeTemperature::displayAt(int ix)
+void ListeTemperature::displayAt(unsigned int ix)
 {
   const ItemTemperature item = items().at(ix);
   const std::string separator = "-------------------------";
@@ -331,6 +331,7 @@ ListeTemperature &ListeTemperature::sortByPortAndValue()
                    ? std::tie(i1.port, i1.value) < std::tie(i2.port, i2.value)
                    : std::tie(i1.port, i1.value) > std::tie(i2.port, i2.value);
       });
+  return *this;
 }
 
 //

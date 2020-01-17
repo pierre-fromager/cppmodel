@@ -1,10 +1,11 @@
 
 #include <iostream>
-#include "demo/demo_temperature.hpp"
-#include "demo/demo_templated_temperature.hpp"
-#include "model/liste_template.hpp"
 #include <algorithm>
 #include <functional>
+#include "profile/profile.hpp"
+#include "demo/demo_temperature.hpp"
+#include "demo/demo_templated_temperature.hpp"
+#include "model/liste.tcc"
 
 using namespace cppmodel;
 

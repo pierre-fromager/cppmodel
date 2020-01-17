@@ -3,6 +3,11 @@
 #define CPPMODEL_PROFILE_HPP
 
 #include <string>
+#include <iostream>
+#include <fstream>
+#include <unistd.h>
+#include <chrono>
+#include "../terminal/ansi.tcc"
 
 namespace cppmodel
 {
@@ -17,6 +22,7 @@ namespace cppmodel
 
     public:
         Profile();
+        ~Profile();
         void mark(std::string msg);
         void elapse();
         void mem(Mem &mark);

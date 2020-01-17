@@ -1,10 +1,5 @@
 
-#include <iostream>
-#include <fstream>
-#include <unistd.h>
-#include <chrono>
 #include "profile.hpp"
-#include "../terminal/ansi.hpp"
 
 using namespace cppmodel;
 
@@ -13,6 +8,14 @@ using namespace cppmodel;
 //
 //
 Profile::Profile()
+{
+}
+
+//
+// @brief Construct a new Profile:: Profile object
+//
+//
+Profile::~Profile()
 {
 }
 

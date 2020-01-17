@@ -1,6 +1,6 @@
 
-#ifndef CPPMODEL_FILE_HPP
-#define CPPMODEL_FILE_HPP
+#ifndef CPPMODEL_FILE_TEMPLATE_HPP
+#define CPPMODEL_FILE_TEMPLATE_HPP
 
 #include <string>
 #include <vector>

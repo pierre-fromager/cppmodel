@@ -6,8 +6,8 @@
 #include <iostream>
 #include "../profile/profile.hpp"
 #include "../model/item_temperature.hpp"
-#include "../model/liste_template.hpp"
-#include "../terminal/ansi.hpp"
+#include "../model/liste.tcc"
+#include "../terminal/ansi.tcc"
 
 namespace cppmodel
 {

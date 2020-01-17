@@ -32,11 +32,11 @@ namespace cppmodel
             ListeTemperature();
             ~ListeTemperature();
             VectorItem items();
-            ItemTemperature itemAt(int ix);
+            ItemTemperature itemAt(unsigned int ix);
             void resetAll();
-            bool removeAt(int ix);
+            bool removeAt(unsigned int ix);
             void appendItem(ItemTemperature item);
-            bool setItemAt(int ix, ItemTemperature item);
+            bool setItemAt(unsigned int ix, ItemTemperature item);
             int getSize();
             int getMinValue();
             int getMinPort();
@@ -44,7 +44,7 @@ namespace cppmodel
             int getMaxValue();
             int getMaxPort();
             int getMaxIndex();
-            void displayAt(int ix);
+            void displayAt(unsigned int ix);
             void displayAll();
             ListeTemperature &setView(Views mode);
             ListeTemperature &setOrder(Directions direction);
