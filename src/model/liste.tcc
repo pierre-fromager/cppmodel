@@ -53,12 +53,8 @@ public:
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
     ListeTemplate &setSortComparator(
-         std::function<bool(Item i1, Item i2)> comparator);
+        std::function<bool(Item i1, Item i2)> comparator);
     ListeTemplate &sortByComparator();
-    ListeTemplate &sortByIndex();
-    ListeTemplate &sortByPort();
-    ListeTemplate &sortByValue();
-    ListeTemplate &sortByPortAndValue();
     ListeTemplate &filterByPort(int portFilter);
     ListeTemplate &filterByValue(int valueFilter);
 
@@ -366,10 +362,10 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setView(Views 
 
 //
 // @brief sort by lambda comparator
-// 
-// @tparam Item 
-// @tparam VectorItem 
-// @return ListeTemplate<Item, VectorItem>& 
+//
+// @tparam Item
+// @tparam VectorItem
+// @return ListeTemplate<Item, VectorItem>&
 //
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByComparator()
@@ -381,86 +377,16 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByComparat
 //
 // @brief set lambda comparator
 //
-// @tparam Item 
-// @tparam VectorItem 
-// @param comparator 
-// @return ListeTemplate<Item, VectorItem>& 
+// @tparam Item
+// @tparam VectorItem
+// @param comparator
+// @return ListeTemplate<Item, VectorItem>&
 //
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setSortComparator(
     std::function<bool(Item i1, Item i2)> comparator)
 {
     sortComparator = comparator;
-    return *this;
-}
-
-//
-// @brief chain method to sort list by index
-//
-//
-template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByIndex()
-{
-    const bool isAsc = (order == ASC);
-    std::sort(
-        itemList.begin(),
-        itemList.end(),
-        [isAsc](const Item &i1, const Item &i2) {
-            return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
-        });
-    return *this;
-}
-
-//
-// @brief chain method to sort by port
-//
-//
-template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByPort()
-{
-    const bool isAsc = (order == ASC);
-    std::sort(
-        itemList.begin(),
-        itemList.end(),
-        [isAsc](const Item &i1, const Item &i2) {
-            return (isAsc) ? (i1.port < i2.port) : (i1.port > i2.port);
-        });
-    return *this;
-}
-
-//
-// @brief chain method to sort by value
-//
-//
-template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByValue()
-{
-    const bool isAsc = (order == ASC);
-    std::sort(
-        itemList.begin(),
-        itemList.end(),
-        [isAsc](const Item &i1, const Item &i2) {
-            return (isAsc) ? (i1.value < i2.value) : (i1.value > i2.value);
-        });
-    return *this;
-}
-
-//
-// @brief multicriterias sort by port and value
-//
-//
-template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByPortAndValue()
-{
-    const bool isAsc = (order == ASC);
-    std::sort(
-        itemList.begin(),
-        itemList.end(),
-        [isAsc](const Item &i1, const Item &i2) {
-            return (isAsc)
-                       ? std::tie(i1.port, i1.value) < std::tie(i2.port, i2.value)
-                       : std::tie(i1.port, i1.value) > std::tie(i2.port, i2.value);
-        });
     return *this;
 }
 

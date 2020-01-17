@@ -33,8 +33,9 @@ void DemoGeneric::println(std::string msg)
 void DemoGeneric::printTitle(std::string msg)
 {
     std::cout << std::endl
-              << terminal::ansi::fgbold_red
-              << msg << terminal::ansi::reset << std::endl;
+              << terminal::ansi::bold << terminal::ansi::fg_red
+              << msg
+              << terminal::ansi::reset << std::endl;
 }
 
 //
@@ -44,18 +45,18 @@ void DemoGeneric::printTitle(std::string msg)
 //
 void DemoGeneric::run()
 {
-    printTitle("> generate");
+    printTitle("> generate generic");
     populateList();
     appendItem();
-    printTitle("> sorts");
+    printTitle("> sorts generic");
     sortByIndex();
     sortByPort();
     sortByValue();
-    printTitle("> minima");
+    printTitle("> minima generic");
     minima();
-    printTitle("> maxima");
+    printTitle("> maxima generic");
     maxima();
-    printTitle("> filters");
+    printTitle("> filters generic");
     filterItems();
 }
 
@@ -65,7 +66,7 @@ void DemoGeneric::run()
 //
 void DemoGeneric::populateList()
 {
-    m_profiler.mark("generation");
+    m_profiler.mark("generation generic");
     const int itemAmount = 1000000;
     for (int i = 0; i < itemAmount; i++)
     {
@@ -86,7 +87,7 @@ void DemoGeneric::populateList()
 //
 void DemoGeneric::appendItem()
 {
-    m_profiler.mark("append item");
+    m_profiler.mark("append item generic");
     m_item.index = 1000;
     m_item.value = 0;
     m_item.timestamp = "3020-20-20";
@@ -102,7 +103,7 @@ void DemoGeneric::appendItem()
 //
 void DemoGeneric::sortByIndex()
 {
-    m_profiler.mark("sort index");
+    m_profiler.mark("sort index generic");
     println("> start sort index");
     m_list
         .setOrder(ListeTemplate<ItemTemperature>::DESC)
@@ -122,11 +123,16 @@ void DemoGeneric::sortByIndex()
 //
 void DemoGeneric::sortByPort()
 {
-    m_profiler.mark("sort port");
+    m_profiler.mark("sort port generic");
     println("> start sort port");
     m_list
-        .setOrder(ListeTemplate<ItemTemperature>::ASC)
-        .sortByPort()
+        .setOrder(ListeTemplate<ItemTemperature>::DESC)
+        .setSortComparator(
+            [](
+                const ItemTemperature &i1, const ItemTemperature &i2) {
+                return (i1.port > i2.port);
+            })
+        .sortByComparator()
         .displayAt(0);
     m_profiler.elapse();
 }
@@ -137,11 +143,16 @@ void DemoGeneric::sortByPort()
 //
 void DemoGeneric::sortByValue()
 {
-    m_profiler.mark("sort value");
+    m_profiler.mark("sort value generic");
     println("> start sort value");
     m_list
-        .setOrder(ListeTemplate<ItemTemperature>::ASC)
-        .sortByValue()
+        .setOrder(ListeTemplate<ItemTemperature>::DESC)
+        .setSortComparator(
+            [](
+                const ItemTemperature &i1, const ItemTemperature &i2) {
+                return (i1.value > i2.value);
+            })
+        .sortByComparator()
         .displayAt(0);
     m_profiler.elapse();
 }
@@ -152,7 +163,7 @@ void DemoGeneric::sortByValue()
 //
 void DemoGeneric::minima()
 {
-    m_profiler.mark("minima");
+    m_profiler.mark("minima generic");
     println("min index " + std::to_string(m_list.getMinIndex()));
     println("min port " + std::to_string(m_list.getMinPort()));
     println("min value " + std::to_string(m_list.getMinValue()));
@@ -165,7 +176,7 @@ void DemoGeneric::minima()
 //
 void DemoGeneric::maxima()
 {
-    m_profiler.mark("maxima");
+    m_profiler.mark("maxima generic");
     println("max index " + std::to_string(m_list.getMaxIndex()));
     println("max port " + std::to_string(m_list.getMaxPort()));
     println("max value " + std::to_string(m_list.getMaxValue()));
@@ -178,7 +189,7 @@ void DemoGeneric::maxima()
 //
 void DemoGeneric::filterItems()
 {
-    m_profiler.mark("filters");
+    m_profiler.mark("filters generic");
     m_list
         .setView(ListeTemplate<ItemTemperature>::MAIN)
         .filterByValue(0)

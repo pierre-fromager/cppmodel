@@ -1,15 +1,14 @@
 
 #include "demo_specific.hpp"
 
-
 using namespace cppmodel;
 
 //
 // @brief Construct a new DemoSpecific object
 //
-// @param profiler 
-// @param item 
-// @param list 
+// @param profiler
+// @param item
+// @param list
 //
 DemoSpecific::DemoSpecific(Profile &profiler, ItemTemperature &item, ListeTemperature &list)
     : m_profiler(profiler), m_item(item), m_list(list)
@@ -19,7 +18,7 @@ DemoSpecific::DemoSpecific(Profile &profiler, ItemTemperature &item, ListeTemper
 //
 // @brief print message with a new line
 //
-// @param msg 
+// @param msg
 //
 void DemoSpecific::println(std::string msg)
 {
@@ -34,27 +33,29 @@ void DemoSpecific::println(std::string msg)
 void DemoSpecific::printTitle(std::string msg)
 {
     std::cout << std::endl
-              << terminal::ansi::fgbold_red
-              << msg << terminal::ansi::reset << std::endl;
+              << terminal::ansi::bold << terminal::ansi::fg_red
+              << msg
+              << terminal::ansi::reset << std::endl;
 }
 
 //
 // @brief run demo
 //
 //
-void DemoSpecific::run(){
-    printTitle("> generate");
+void DemoSpecific::run()
+{
+    printTitle("> generate specific");
     populateList();
     appendItem();
-    printTitle("> sorts");
+    printTitle("> sorts specific");
     sortByIndex();
     sortByPort();
     sortByValue();
-    printTitle("> minima");
+    printTitle("> minima specific");
     minima();
-    printTitle("> maxima");
+    printTitle("> maxima specific");
     maxima();
-    printTitle("> filters");
+    printTitle("> filters specific");
     filterItems();
 }
 
@@ -64,15 +65,15 @@ void DemoSpecific::run(){
 //
 void DemoSpecific::populateList()
 {
-    m_profiler.mark("generation");
+    m_profiler.mark("generation specific");
     const int itemAmount = 1000000;
     for (int i = 0; i < itemAmount; i++)
     {
         m_item.index = i;
-        m_item.port = i % 4;// 0..4
+        m_item.port = i % 4; // 0..4
         m_item.timestamp = "2020-01-0" + std::to_string(i % 30);
         m_item.type = "temperature";
-        m_item.value = rand() % 100;// 0..100
+        m_item.value = rand() % 100; // 0..100
         m_list.appendItem(m_item);
     }
     println("* First item");
@@ -89,7 +90,7 @@ void DemoSpecific::populateList()
 //
 void DemoSpecific::appendItem()
 {
-    m_profiler.mark("append item");
+    m_profiler.mark("append item specific");
     m_item.index = 1000;
     m_item.value = 0;
     m_item.timestamp = "3020-20-20";
@@ -105,7 +106,7 @@ void DemoSpecific::appendItem()
 //
 void DemoSpecific::sortByIndex()
 {
-    m_profiler.mark("sort index");
+    m_profiler.mark("sort index specific");
     println("> start sort index");
     m_list.setOrder(ListeTemperature::DESC).sortByIndex().displayAt(0);
     m_profiler.elapse();
@@ -117,7 +118,7 @@ void DemoSpecific::sortByIndex()
 //
 void DemoSpecific::sortByPort()
 {
-    m_profiler.mark("sort port");
+    m_profiler.mark("sort port specific");
     println("> start sort port");
     m_list.setOrder(ListeTemperature::ASC).sortByPort().displayAt(0);
     m_profiler.elapse();
@@ -129,7 +130,7 @@ void DemoSpecific::sortByPort()
 //
 void DemoSpecific::sortByValue()
 {
-    m_profiler.mark("sort value");
+    m_profiler.mark("sort value specific");
     println("> start sort value");
     m_list.setOrder(ListeTemperature::ASC).sortByValue().displayAt(0);
     m_profiler.elapse();
@@ -141,7 +142,7 @@ void DemoSpecific::sortByValue()
 //
 void DemoSpecific::minima()
 {
-    m_profiler.mark("minima");
+    m_profiler.mark("minima specific");
     println("min index " + std::to_string(m_list.getMinIndex()));
     println("min port " + std::to_string(m_list.getMinPort()));
     println("min value " + std::to_string(m_list.getMinValue()));
@@ -154,7 +155,7 @@ void DemoSpecific::minima()
 //
 void DemoSpecific::maxima()
 {
-    m_profiler.mark("maxima");
+    m_profiler.mark("maxima specific");
     println("max index " + std::to_string(m_list.getMaxIndex()));
     println("max port " + std::to_string(m_list.getMaxPort()));
     println("max value " + std::to_string(m_list.getMaxValue()));
@@ -167,7 +168,7 @@ void DemoSpecific::maxima()
 //
 void DemoSpecific::filterItems()
 {
-    m_profiler.mark("filters");
+    m_profiler.mark("filters specific");
     m_list.setView(ListeTemperature::MAIN).filterByValue(0).setView(ListeTemperature::FILTERED);
     int countFilteredValue = m_list.items().size();
     println("count filtered values 0 : " + std::to_string(countFilteredValue));

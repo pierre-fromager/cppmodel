@@ -37,18 +37,27 @@ void Profile::mark(std::string markerMsg)
 //
 void Profile::elapse()
 {
+    const std::string separator = "+-----------------------------";
+    const std::string timeUnit = " s";
+    const std::string memUnit = " kb";
     mem(mem_out);
-    std::cout << terminal::ansi::fg_white
-              << "+  Profile " << msg << " : " << microtime() - in
-              << "s" << terminal::ansi::reset << std::endl;
     std::cout << terminal::ansi::fg_cyan
-              << "+  Profile mem vm  "
-              << msg << " : " << mem_out.vm - mem_in.vm << "kb"
-              << terminal::ansi::reset << std::endl;
-    std::cout << terminal::ansi::fg_yellow
-              << "+  Profile mem res "
-              << msg << " : " << mem_out.rss - mem_in.rss << "kb"
-              << terminal::ansi::reset << std::endl;
+              << separator << std::endl
+              << terminal::ansi::fg_cyan
+              << "| Profile  " << terminal::ansi::bold << msg
+              << terminal::ansi::reset
+              << std::endl
+              << terminal::ansi::fg_cyan;
+    std::cout << "| Elapse   : " << microtime() - in << timeUnit
+              << std::endl;
+    std::cout << "| Mem vm  "
+              << " : " << mem_out.vm - mem_in.vm << memUnit
+              << std::endl;
+    std::cout << "| Mem res "
+              << " : " << mem_out.rss - mem_in.rss << memUnit
+              << std::endl
+              << separator << std::endl
+              << terminal::ansi::reset;
 }
 
 /**
