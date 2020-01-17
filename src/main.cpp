@@ -1,7 +1,7 @@
 
 #include "profile/profile.hpp"
-#include "demo/demo_temperature.hpp"
-#include "demo/demo_templated_temperature.hpp"
+#include "demo/demo_generic.hpp"
+#include "demo/demo_specific.hpp"
 #include "model/liste.tcc"
 
 using namespace cppmodel;
@@ -18,12 +18,11 @@ int main()
     ItemTemperature item;
 
     ListeTemperature listTemp;
-    DemoTemperature demo = DemoTemperature(profiler, item, listTemp);
+    DemoSpecific demo = DemoSpecific(profiler, item, listTemp);
     demo.run();
 
     ListeTemplate<ItemTemperature> listTemplated;
-    DemoTemplatedTemperature demoTemplated = DemoTemplatedTemperature(
-        profiler, item, listTemplated);
+    DemoGeneric demoTemplated = DemoGeneric(profiler, item, listTemplated);
     demoTemplated.run();
 
     return 0;

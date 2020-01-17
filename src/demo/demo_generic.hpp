@@ -6,17 +6,16 @@
 #include <iostream>
 #include "../model/item_temperature.hpp"
 #include "../profile/profile.hpp"
-#include "../model/item_temperature.hpp"
 #include "../model/liste.tcc"
 #include "../terminal/ansi.tcc"
 
 namespace cppmodel
 {
-    class DemoTemplatedTemperature
+    class DemoGeneric
     {
 
         public:
-            DemoTemplatedTemperature(Profile &profiler, ItemTemperature &item, ListeTemplate<ItemTemperature> &list);
+            DemoGeneric(Profile &profiler, ItemTemperature &item, ListeTemplate<ItemTemperature> &list);
             void run();
 
         private:

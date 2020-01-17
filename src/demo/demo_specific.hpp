@@ -10,11 +10,11 @@
 
 namespace cppmodel
 {
-    class DemoTemperature
+    class DemoSpecific
     {
 
         public:
-            DemoTemperature(Profile &profiler, ItemTemperature &item, ListeTemperature &list);
+            DemoSpecific(Profile &profiler, ItemTemperature &item, ListeTemperature &list);
             void run();
 
         private:

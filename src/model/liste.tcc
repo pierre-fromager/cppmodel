@@ -53,7 +53,7 @@ public:
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
     ListeTemplate &setSortComparator(
-        const std::function<bool(Item i1, Item i2)> &comparator);
+         std::function<bool(Item i1, Item i2)> comparator);
     ListeTemplate &sortByComparator();
     ListeTemplate &sortByIndex();
     ListeTemplate &sortByPort();
@@ -365,41 +365,31 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setView(Views 
 }
 
 //
-// @brief chain method to sort list by a name prop
+// @brief sort by lambda comparator
+// 
+// @tparam Item 
+// @tparam VectorItem 
+// @return ListeTemplate<Item, VectorItem>& 
 //
-//
-/*
-template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortBy(std::string name)
-{
-    const bool isAsc = (order == ASC);
-    std::sort(
-        itemList.begin(),
-        itemList.end(),
-        [isAsc]( Item &i1,  Item &i2) {
-            //int ptrProp = Item::*p;
-            //p = &Item::prop;
-            //int* ptrToC2 =  &(i2->prop);
-            return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
-            //return (isAsc) ? (i1->*p < i2->*p) : (i1->*p > i2->*p);
-        });
-    return *this;
-}*/
-
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByComparator()
 {
-    //const bool isAsc = (order == ASC);
     std::sort(itemList.begin(), itemList.end(), sortComparator);
     return *this;
 }
 
+//
+// @brief set lambda comparator
+//
+// @tparam Item 
+// @tparam VectorItem 
+// @param comparator 
+// @return ListeTemplate<Item, VectorItem>& 
+//
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setSortComparator(
-    const std::function<bool(Item i1, Item i2)> &comparator)
+    std::function<bool(Item i1, Item i2)> comparator)
 {
-    //const bool isAsc = (order == ASC);
-    //std::sort(itemList.begin(), itemList.end(), sortComparator);
     sortComparator = comparator;
     return *this;
 }

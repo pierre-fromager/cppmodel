@@ -11,8 +11,8 @@ $COMPILO $DEBUGOPT $CPPSTD $GLOBOPT \
     src/main.cpp \
     src/model/liste_temperature.cpp \
     src/profile/profile.cpp \
-    src/demo/demo_temperature.cpp \
-    src/demo/demo_templated_temperature.cpp \
+    src/demo/demo_generic.cpp \
+    src/demo/demo_specific.cpp \
     -o build/demo
 
 echo "Compilation completed"
