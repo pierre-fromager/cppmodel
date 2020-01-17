@@ -1,8 +1,13 @@
 #!/bin/bash
+
 COMPILO=/usr/bin/g++-6
+#DEBUGOPT="-g"
+DEBUGOPT=""
+CPPSTD="-std=c++11"
+GLOBOPT="-Wall -Wextra";
 echo "Building demo model g++"
 
-$COMPILO -g -std=c++11 -Wall -Wextra \
+$COMPILO $DEBUGOPT $CPPSTD $GLOBOPT \
     src/main.cpp \
     src/model/liste_temperature.cpp \
     src/profile/profile.cpp \

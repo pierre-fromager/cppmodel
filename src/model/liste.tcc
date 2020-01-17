@@ -8,6 +8,7 @@
 //#include <sstream>
 #include <iostream>
 #include <tuple>
+#include <functional>
 
 namespace cppmodel
 {
@@ -51,7 +52,7 @@ public:
     void displayAll();
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
-    ListeTemplate &sortBy(const std::string name);
+    ListeTemplate &sortBy(const std::function<bool(Item i1, Item i2)> &comparator);
     ListeTemplate &sortByIndex();
     ListeTemplate &sortByPort();
     ListeTemplate &sortByValue();
@@ -363,22 +364,29 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setView(Views 
 // @brief chain method to sort list by a name prop
 //
 //
+/*
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortBy(std::string name)
 {
     const bool isAsc = (order == ASC);
-    const std::string prop = name;
-    
     std::sort(
         itemList.begin(),
         itemList.end(),
-        [isAsc, prop]( Item &i1,  Item &i2) {
+        [isAsc]( Item &i1,  Item &i2) {
             //int ptrProp = Item::*p;
             //p = &Item::prop;
             //int* ptrToC2 =  &(i2->prop);
             return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
             //return (isAsc) ? (i1->*p < i2->*p) : (i1->*p > i2->*p);
         });
+    return *this;
+}*/
+
+template <typename Item, typename VectorItem>
+ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortBy(const std::function<bool(Item, Item)> &comparator)
+{
+    //const bool isAsc = (order == ASC);
+    std::sort(itemList.begin(), itemList.end(), comparator);
     return *this;
 }
 

@@ -104,9 +104,15 @@ void DemoTemplatedTemperature::sortByIndex()
 {
     m_profiler.mark("sort index");
     println("> start sort index");
-    //m_list.setOrder(Liste<ItemTemperature>::DESC).sortByIndex().displayAt(0);
-    const std::string key = "index";
-    m_list.setOrder(ListeTemplate<ItemTemperature>::DESC).sortBy(key).displayAt(0);
+    const std::function<bool(ItemTemperature,ItemTemperature)> comparator = [](
+        const ItemTemperature &i1,const ItemTemperature &i2
+        ) {
+        return (i1.index < i2.index);
+    };
+    m_list
+        .setOrder(ListeTemplate<ItemTemperature>::DESC)
+        .sortBy(comparator)
+        .displayAt(0);
     m_profiler.elapse();
 }
 
@@ -118,7 +124,10 @@ void DemoTemplatedTemperature::sortByPort()
 {
     m_profiler.mark("sort port");
     println("> start sort port");
-    m_list.setOrder(ListeTemplate<ItemTemperature>::ASC).sortByPort().displayAt(0);
+    m_list
+        .setOrder(ListeTemplate<ItemTemperature>::ASC)
+        .sortByPort()
+        .displayAt(0);
     m_profiler.elapse();
 }
 
@@ -130,7 +139,10 @@ void DemoTemplatedTemperature::sortByValue()
 {
     m_profiler.mark("sort value");
     println("> start sort value");
-    m_list.setOrder(ListeTemplate<ItemTemperature>::ASC).sortByValue().displayAt(0);
+    m_list
+        .setOrder(ListeTemplate<ItemTemperature>::ASC)
+        .sortByValue()
+        .displayAt(0);
     m_profiler.elapse();
 }
 
@@ -171,14 +183,15 @@ void DemoTemplatedTemperature::filterItems()
         .setView(ListeTemplate<ItemTemperature>::MAIN)
         .filterByValue(0)
         .setView(ListeTemplate<ItemTemperature>::FILTERED);
-    int countFilteredValue = m_list.items().size();
-    println("count filtered values 0 : " + std::to_string(countFilteredValue));
+    const std::string strCountValues = std::to_string(
+        m_list.items().size());
+    println("count filtered values 0 : " + strCountValues);
     m_list
         .setView(ListeTemplate<ItemTemperature>::MAIN)
         .filterByPort(0)
         .setView(ListeTemplate<ItemTemperature>::FILTERED);
-    const int countFilteredPort = m_list.items().size();
-    println("count filteres ports 0 : " + std::to_string(countFilteredPort));
+    const std::string strCountPorts = std::to_string(m_list.items().size());
+    println("count filteres ports 0 : " + strCountPorts);
     m_list.setView(ListeTemplate<ItemTemperature>::MAIN);
     m_profiler.elapse();
 }

@@ -47,7 +47,7 @@ void DemoTemperature::run(){
     populateList();
     appendItem();
     printTitle("> sorts");
-    //sortByIndex();
+    sortByIndex();
     sortByPort();
     sortByValue();
     printTitle("> minima");

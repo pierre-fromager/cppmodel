@@ -4,6 +4,7 @@
 
 #include <string>
 #include <iostream>
+#include "../model/item_temperature.hpp"
 #include "../profile/profile.hpp"
 #include "../model/item_temperature.hpp"
 #include "../model/liste.tcc"
