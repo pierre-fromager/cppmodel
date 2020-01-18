@@ -6,7 +6,7 @@
 #include <iostream>
 #include "../model/item_temperature.hpp"
 #include "../profile/profile.hpp"
-#include "../model/liste_generic.tcc"
+#include "../model/liste_generic.inl"
 #include "../terminal/ansi.tcc"
 
 namespace cppmodel
