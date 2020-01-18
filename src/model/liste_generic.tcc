@@ -5,9 +5,6 @@
 #include <string>
 #include <vector>
 #include <algorithm>
-//#include <sstream>
-#include <iostream>
-#include <tuple>
 #include <functional>
 
 namespace cppmodel
@@ -52,8 +49,9 @@ public:
     void displayAll();
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
-    ListeTemplate &setSortComparator(
-        std::function<bool(Item i1, Item i2)> comparator);
+    ListeTemplate &setSortComparator(const std::function<bool(
+                                         const Item &i1, const Item &i2)>
+                                         &comparator);
     ListeTemplate &sortByComparator();
     ListeTemplate &filterByPort(int portFilter);
     ListeTemplate &filterByValue(int valueFilter);
@@ -384,7 +382,7 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByComparat
 //
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setSortComparator(
-    std::function<bool(Item i1, Item i2)> comparator)
+    const std::function<bool(const Item &i1,const Item &i2)> &comparator)
 {
     sortComparator = comparator;
     return *this;
