@@ -73,6 +73,7 @@ template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem>::ListeTemplate()
 {
     order = ASC;
+    view = MAIN;
     resetAll();
 }
 

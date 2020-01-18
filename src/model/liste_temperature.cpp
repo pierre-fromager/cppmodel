@@ -17,6 +17,7 @@ using namespace cppmodel;
 ListeTemperature::ListeTemperature()
 {
   order = ASC;
+  view = MAIN;
   resetAll();
 }
 
