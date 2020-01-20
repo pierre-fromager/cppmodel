@@ -1,6 +1,6 @@
 CXX = g++ 
 CC = $(CXX)
-CPPFLAGS = -std=c++11 -Wall -Wextra -O3
+CPPFLAGS = -std=c++11 -fopenmp -Wall -Wextra -O2 -D_GLIBCXX_PARALLEL
 SOURCES = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp)
 OBJECTS=$(SOURCES:%.cpp=%.o)
 TARGET=demo

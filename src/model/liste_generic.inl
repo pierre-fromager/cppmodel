@@ -6,19 +6,23 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+#include <thread>
+#include <omp.h>
+#include <parallel/algorithm>
 
 namespace cppmodel
 {
 
 template <typename TFunc>
-void ProcessArguments(const TFunc& process)
-{}
-
-template <typename TFunc, typename HEAD, typename ... TAIL>
-void ProcessArguments(const TFunc& process, const HEAD &head, const TAIL &... tail)
+void ProcessArguments(const TFunc &process)
 {
-  process(head);
-  ProcessArguments(process, tail...);
+}
+
+template <typename TFunc, typename HEAD, typename... TAIL>
+void ProcessArguments(const TFunc &process, const HEAD &head, const TAIL &... tail)
+{
+    process(head);
+    ProcessArguments(process, tail...);
 }
 
 //
@@ -60,9 +64,7 @@ public:
     void displayAll();
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
-    ListeTemplate &setSortComparator(const std::function<bool(
-                                         const Item &i1, const Item &i2)>
-                                         &comparator);
+    ListeTemplate &setSortComparator(const std::function<bool(const Item &i1, const Item &i2)>&comparator);
     ListeTemplate &sortByComparator();
     ListeTemplate &filterByPort(int portFilter);
     ListeTemplate &filterByValue(int valueFilter);
@@ -394,7 +396,7 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByComparat
 //
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setSortComparator(
-    const std::function<bool(const Item &i1,const Item &i2)> &comparator)
+    const std::function<bool(const Item &i1, const Item &i2)> &comparator)
 {
     sortComparator = comparator;
     return *this;
