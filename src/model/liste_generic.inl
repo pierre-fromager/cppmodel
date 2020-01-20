@@ -40,9 +40,10 @@ public:
     void appendItem(Item item);
     bool setItemAt(int ix, Item item);
     int getSize();
-    int getMinValue();
+    auto getMin();
+    /*int getMinValue();
     int getMinPort();
-    int getMinIndex();
+    int getMinIndex();*/
     int getMaxValue();
     int getMaxPort();
     int getMaxIndex();
@@ -50,7 +51,7 @@ public:
     void displayAll();
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
-    ListeTemplate &setSortComparator(const std::function<bool(const Item &i1, const Item &i2)>&comparator);
+    ListeTemplate &setSortComparator(const std::function<bool(const Item &i1, const Item &i2)> &comparator);
     ListeTemplate &sortByComparator();
     ListeTemplate &filterByPort(int portFilter);
     ListeTemplate &filterByValue(int valueFilter);
@@ -60,8 +61,8 @@ private:
     //std::function<bool(Item i1, Item i2) &filterComparator();
     Directions order;
     Views view;
-    VectorItem itemList;
-    VectorItem filteredList;
+    VectorItem _iV;  // MAIN STACK
+    VectorItem _iVf; // FILTERED STACK
 };
 
 //
@@ -93,61 +94,22 @@ ListeTemplate<Item, VectorItem>::~ListeTemplate()
 template <typename Item, typename VectorItem>
 void ListeTemplate<Item, VectorItem>::resetAll()
 {
-    itemList.clear();
-    itemList.resize(0);
-    filteredList.clear();
-    filteredList.resize(0);
+    _iV.clear();
+    _iV.resize(0);
+    _iVf.clear();
+    _iVf.resize(0);
 }
 
 //
-// @brief minimum value
+// @brief get minimum by sort compare lambda
 //
 // @return int
 //
 template <typename Item, typename VectorItem>
-int ListeTemplate<Item, VectorItem>::getMinValue()
+auto ListeTemplate<Item, VectorItem>::getMin()
 {
-    const auto min = std::min_element(
-        itemList.begin(),
-        itemList.end(),
-        [](const Item &i1, const Item &i2) {
-            return i1.value < i2.value;
-        });
-    return min->value;
-}
-
-//
-// @brief minimum port
-//
-// @return int
-//
-template <typename Item, typename VectorItem>
-int ListeTemplate<Item, VectorItem>::getMinPort()
-{
-    const auto min = std::min_element(
-        itemList.begin(),
-        itemList.end(),
-        [](const Item &i1, const Item &i2) {
-            return i1.port < i2.port;
-        });
-    return min->port;
-}
-
-//
-// @brief minimum index
-//
-// @return int
-//
-template <typename Item, typename VectorItem>
-int ListeTemplate<Item, VectorItem>::getMinIndex()
-{
-    const auto min = std::min_element(
-        itemList.begin(),
-        itemList.end(),
-        [](const Item &i1, const Item &i2) {
-            return i1.index < i2.index;
-        });
-    return min->index;
+    const auto min = std::min_element(_iV.begin(), _iV.end(), sortComparator);
+    return min;
 }
 
 //
@@ -159,8 +121,8 @@ template <typename Item, typename VectorItem>
 int ListeTemplate<Item, VectorItem>::getMaxValue()
 {
     const auto max = std::max_element(
-        itemList.begin(),
-        itemList.end(),
+        _iV.begin(),
+        _iV.end(),
         [](const Item &i1, const Item &i2) {
             return i1.value < i2.value;
         });
@@ -176,8 +138,8 @@ template <typename Item, typename VectorItem>
 int ListeTemplate<Item, VectorItem>::getMaxPort()
 {
     const auto max = std::max_element(
-        itemList.begin(),
-        itemList.end(),
+        _iV.begin(),
+        _iV.end(),
         [](const Item &i1, const Item &i2) {
             return i1.port < i2.port;
         });
@@ -193,8 +155,8 @@ template <typename Item, typename VectorItem>
 int ListeTemplate<Item, VectorItem>::getMaxIndex()
 {
     const auto max = std::max_element(
-        itemList.begin(),
-        itemList.end(),
+        _iV.begin(),
+        _iV.end(),
         [](const Item &i1, const Item &i2) {
             return i1.index < i2.index;
         });
@@ -209,7 +171,7 @@ int ListeTemplate<Item, VectorItem>::getMaxIndex()
 template <typename Item, typename VectorItem>
 VectorItem ListeTemplate<Item, VectorItem>::items()
 {
-    return (view == MAIN) ? itemList : filteredList;
+    return (view == MAIN) ? _iV : _iVf;
 }
 
 //
@@ -221,10 +183,10 @@ VectorItem ListeTemplate<Item, VectorItem>::items()
 template <typename Item, typename VectorItem>
 Item ListeTemplate<Item, VectorItem>::itemAt(int ix)
 {
-    const int size = itemList.size();
+    const int size = _iV.size();
     if (size > ix)
         ix = size;
-    return itemList.at(ix);
+    return _iV.at(ix);
 }
 
 //
@@ -237,9 +199,9 @@ Item ListeTemplate<Item, VectorItem>::itemAt(int ix)
 template <typename Item, typename VectorItem>
 bool ListeTemplate<Item, VectorItem>::removeAt(const int ix)
 {
-    if (itemList.size() < ix)
+    if (_iV.size() < ix)
         return false;
-    itemList.erase(itemList.begin() + ix);
+    _iV.erase(_iV.begin() + ix);
     return true;
 }
 
@@ -252,11 +214,11 @@ bool ListeTemplate<Item, VectorItem>::removeAt(const int ix)
 template <typename Item, typename VectorItem>
 void ListeTemplate<Item, VectorItem>::pop()
 {
-    if (itemList.empty())
+    if (_iV.empty())
     {
         throw std::out_of_range("ListeTemplate<>::pop(): empty stack");
     }
-    itemList.pop_back();
+    _iV.pop_back();
 }
 
 //
@@ -267,7 +229,7 @@ void ListeTemplate<Item, VectorItem>::pop()
 template <typename Item, typename VectorItem>
 int ListeTemplate<Item, VectorItem>::getSize()
 {
-    return itemList.size();
+    return _iV.size();
 }
 
 //
@@ -278,7 +240,7 @@ int ListeTemplate<Item, VectorItem>::getSize()
 template <typename Item, typename VectorItem>
 void ListeTemplate<Item, VectorItem>::appendItem(Item item)
 {
-    itemList.push_back(item);
+    _iV.push_back(item);
 }
 
 //
@@ -292,12 +254,12 @@ void ListeTemplate<Item, VectorItem>::appendItem(Item item)
 template <typename Item, typename VectorItem>
 bool ListeTemplate<Item, VectorItem>::setItemAt(int ix, Item item)
 {
-    if (itemList.size() < ix)
+    if (_iV.size() < ix)
     {
         return false;
     }
-    itemList[ix] = item;
-    //itemList.insert(itemList.begin() + ix, item);
+    _iV[ix] = item;
+    //_iV.insert(_iV.begin() + ix, item);
     return true;
 }
 
@@ -368,7 +330,7 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setView(Views 
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByComparator()
 {
-    std::sort(itemList.begin(), itemList.end(), sortComparator);
+    std::sort(_iV.begin(), _iV.end(), sortComparator);
     return *this;
 }
 
@@ -396,12 +358,12 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setSortCompara
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::filterByPort(int portFilter)
 {
-    filteredList.clear();
-    filteredList.resize(itemList.size());
+    _iVf.clear();
+    _iVf.resize(_iV.size());
     std::copy_if(
-        itemList.begin(),
-        itemList.end(),
-        std::back_inserter(filteredList),
+        _iV.begin(),
+        _iV.end(),
+        std::back_inserter(_iVf),
         [portFilter](const Item &i) { return i.port == portFilter; });
     return *this;
 }
@@ -414,12 +376,12 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::filterByPort(i
 template <typename Item, typename VectorItem>
 ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::filterByValue(int valueFilter)
 {
-    filteredList.clear();
-    filteredList.resize(itemList.size());
+    _iVf.clear();
+    _iVf.resize(_iV.size());
     std::copy_if(
-        itemList.begin(),
-        itemList.end(),
-        std::back_inserter(filteredList),
+        _iV.begin(),
+        _iV.end(),
+        std::back_inserter(_iVf),
         [valueFilter](const Item &i) { return i.value == valueFilter; });
     return *this;
 }

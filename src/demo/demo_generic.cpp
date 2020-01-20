@@ -185,9 +185,25 @@ void DemoGeneric::sortByPortValue()
 void DemoGeneric::minima()
 {
     m_profiler.mark("minima generic");
-    println("min index " + std::to_string(m_list.getMinIndex()));
-    println("min port " + std::to_string(m_list.getMinPort()));
-    println("min value " + std::to_string(m_list.getMinValue()));
+    m_list.setSortComparator(
+        [](
+            const ItemTemperature &i1, const ItemTemperature &i2) {
+            return (i1.index < i2.index);
+        });
+    println("min index " + std::to_string(m_list.getMin()->index));
+    m_list.setSortComparator(
+        [](
+            const ItemTemperature &i1, const ItemTemperature &i2) {
+            return (i1.port < i2.port);
+        });
+
+    println("min port " + std::to_string(m_list.getMin()->port));
+    m_list.setSortComparator(
+        [](
+            const ItemTemperature &i1, const ItemTemperature &i2) {
+            return (i1.value < i2.value);
+        });
+    println("min value " + std::to_string(m_list.getMin()->value));
     m_profiler.elapse();
 }
 
