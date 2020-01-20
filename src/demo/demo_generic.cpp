@@ -196,7 +196,6 @@ void DemoGeneric::minima()
             const ItemTemperature &i1, const ItemTemperature &i2) {
             return (i1.port < i2.port);
         });
-
     println("min port " + std::to_string(m_list.getMin()->port));
     m_list.setSortComparator(
         [](
@@ -214,9 +213,24 @@ void DemoGeneric::minima()
 void DemoGeneric::maxima()
 {
     m_profiler.mark("maxima generic");
-    println("max index " + std::to_string(m_list.getMaxIndex()));
-    println("max port " + std::to_string(m_list.getMaxPort()));
-    println("max value " + std::to_string(m_list.getMaxValue()));
+    m_list.setSortComparator(
+        [](
+            const ItemTemperature &i1, const ItemTemperature &i2) {
+            return (i1.index < i2.index);
+        });
+    println("max index " + std::to_string(m_list.getMax()->index));
+    m_list.setSortComparator(
+        [](
+            const ItemTemperature &i1, const ItemTemperature &i2) {
+            return (i1.port < i2.port);
+        });
+    println("max port " + std::to_string(m_list.getMax()->port));
+    m_list.setSortComparator(
+        [](
+            const ItemTemperature &i1, const ItemTemperature &i2) {
+            return (i1.value < i2.value);
+        });
+    println("max value " + std::to_string(m_list.getMax()->value));
     m_profiler.elapse();
 }
 

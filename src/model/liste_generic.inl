@@ -41,12 +41,7 @@ public:
     bool setItemAt(int ix, Item item);
     int getSize();
     auto getMin();
-    /*int getMinValue();
-    int getMinPort();
-    int getMinIndex();*/
-    int getMaxValue();
-    int getMaxPort();
-    int getMaxIndex();
+    auto getMax();
     void displayAt(int ix);
     void displayAll();
     ListeTemplate &setView(Views mode);
@@ -101,66 +96,25 @@ void ListeTemplate<Item, VectorItem>::resetAll()
 }
 
 //
-// @brief get minimum by sort compare lambda
+// @brief get min by sort compare lambda
 //
-// @return int
+// @return auto
 //
 template <typename Item, typename VectorItem>
 auto ListeTemplate<Item, VectorItem>::getMin()
 {
-    const auto min = std::min_element(_iV.begin(), _iV.end(), sortComparator);
-    return min;
+    return std::min_element(_iV.begin(), _iV.end(), sortComparator);
 }
 
 //
-// @brief maximum value
+// @brief get max by sort compare lambda
 //
-// @return int
-//
-template <typename Item, typename VectorItem>
-int ListeTemplate<Item, VectorItem>::getMaxValue()
-{
-    const auto max = std::max_element(
-        _iV.begin(),
-        _iV.end(),
-        [](const Item &i1, const Item &i2) {
-            return i1.value < i2.value;
-        });
-    return max->value;
-}
-
-//
-// @brief maximum port
-//
-// @return int
+// @return auto
 //
 template <typename Item, typename VectorItem>
-int ListeTemplate<Item, VectorItem>::getMaxPort()
+auto ListeTemplate<Item, VectorItem>::getMax()
 {
-    const auto max = std::max_element(
-        _iV.begin(),
-        _iV.end(),
-        [](const Item &i1, const Item &i2) {
-            return i1.port < i2.port;
-        });
-    return max->port;
-}
-
-//
-// @brief maximum index
-//
-// @return int
-//
-template <typename Item, typename VectorItem>
-int ListeTemplate<Item, VectorItem>::getMaxIndex()
-{
-    const auto max = std::max_element(
-        _iV.begin(),
-        _iV.end(),
-        [](const Item &i1, const Item &i2) {
-            return i1.index < i2.index;
-        });
-    return max->index;
+    return std::max_element(_iV.begin(), _iV.end(), sortComparator);
 }
 
 //
