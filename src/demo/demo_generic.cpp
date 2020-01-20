@@ -52,6 +52,7 @@ void DemoGeneric::run()
     sortByIndex();
     sortByPort();
     sortByValue();
+    sortByPortValue();
     printTitle("> minima generic");
     minima();
     printTitle("> maxima generic");
@@ -71,10 +72,10 @@ void DemoGeneric::populateList()
     for (int i = 0; i < itemAmount; i++)
     {
         m_item.index = i;
-        m_item.port = i % 4; // 0..4
+        m_item.port = i % 11; // 0..10
         m_item.timestamp = "2020-01-0" + std::to_string(i % 30);
         m_item.type = "temperature";
-        m_item.value = rand() % 100; // 0..100
+        m_item.value = rand() % 101; // 0..99
         m_list.appendItem(m_item);
     }
     println("> Liste size : " + std::to_string(m_list.getSize()));
@@ -151,6 +152,26 @@ void DemoGeneric::sortByValue()
             [](
                 const ItemTemperature &i1, const ItemTemperature &i2) {
                 return (i1.value > i2.value);
+            })
+        .sortByComparator()
+        .displayAt(0);
+    m_profiler.elapse();
+}
+
+//
+// @brief sort by port and value order asc
+//
+//
+void DemoGeneric::sortByPortValue()
+{
+    m_profiler.mark("sort port + value generic");
+    println("> start sort port + value");
+    m_list
+        .setOrder(ListeTemplate<ItemTemperature>::DESC)
+        .setSortComparator(
+            [](
+                const ItemTemperature &i1, const ItemTemperature &i2) {
+                return std::tie(i1.port, i1.value) > std::tie(i2.port, i2.value);
             })
         .sortByComparator()
         .displayAt(0);

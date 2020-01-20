@@ -10,12 +10,20 @@
 namespace cppmodel
 {
 
+/**
+ * @brief init sort order comparator
+ * 
+ */
 struct ItemComparator
 {
     bool _asc;
     ItemComparator(bool asc) : _asc(asc) {}
 };
 
+/**
+ * @brief compare by index
+ * 
+ */
 struct ItemIndexComparator : public ItemComparator
 {
     ItemIndexComparator(bool asc) : ItemComparator(asc){};
@@ -25,6 +33,10 @@ struct ItemIndexComparator : public ItemComparator
     }
 };
 
+/**
+ * @brief compare by port
+ * 
+ */
 struct ItemPortComparator : public ItemComparator
 {
     ItemPortComparator(bool asc) : ItemComparator(asc){};
@@ -34,6 +46,10 @@ struct ItemPortComparator : public ItemComparator
     }
 };
 
+/**
+ * @brief compare by value
+ * 
+ */
 struct ItemValueComparator : public ItemComparator
 {
     ItemValueComparator(bool asc) : ItemComparator(asc){};
@@ -43,6 +59,10 @@ struct ItemValueComparator : public ItemComparator
     }
 };
 
+/**
+ * @brief compare by port and value
+ * 
+ */
 struct ItemPortValueComparator : public ItemComparator
 {
     ItemPortValueComparator(bool asc) : ItemComparator(asc){};

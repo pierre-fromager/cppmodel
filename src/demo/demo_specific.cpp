@@ -51,6 +51,7 @@ void DemoSpecific::run()
     sortByIndex();
     sortByPort();
     sortByValue();
+    sortByPortValue();
     printTitle("> minima specific");
     minima();
     printTitle("> maxima specific");
@@ -70,10 +71,10 @@ void DemoSpecific::populateList()
     for (int i = 0; i < itemAmount; i++)
     {
         m_item.index = i;
-        m_item.port = i % 4; // 0..4
+        m_item.port = i % 11; // 0..11
         m_item.timestamp = "2020-01-0" + std::to_string(i % 30);
         m_item.type = "temperature";
-        m_item.value = rand() % 100; // 0..100
+        m_item.value = rand() % 101; // 0..100
         m_list.appendItem(m_item);
     }
     println("* First item");
@@ -133,6 +134,18 @@ void DemoSpecific::sortByValue()
     m_profiler.mark("sort value specific");
     println("> start sort value");
     m_list.setOrder(ListeTemperature::ASC).sortByValue().displayAt(0);
+    m_profiler.elapse();
+}
+
+//
+// @brief sort by port and value order asc
+//
+//
+void DemoSpecific::sortByPortValue()
+{
+    m_profiler.mark("sort port + value specific");
+    println("> start sort value + port");
+    m_list.setOrder(ListeTemperature::ASC).sortByPortAndValue().displayAt(0);
     m_profiler.elapse();
 }
 

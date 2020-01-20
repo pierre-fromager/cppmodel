@@ -25,6 +25,7 @@ namespace cppmodel
             void sortByIndex();
             void sortByPort();
             void sortByValue();
+            void sortByPortValue();
             void minima();
             void maxima();
             void filterItems();
