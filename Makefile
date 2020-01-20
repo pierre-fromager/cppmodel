@@ -1,6 +1,6 @@
-CXX=g++
+CXX = g++ 
 CC = $(CXX)
-CPPFLAGS=-Wall -Wextra -std=c++11 -O3
+CPPFLAGS = -std=c++11 -Wall -Wextra -O3
 SOURCES = $(wildcard src/*.cpp) $(wildcard src/**/*.cpp)
 OBJECTS=$(SOURCES:%.cpp=%.o)
 TARGET=demo

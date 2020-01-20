@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include "item_temperature.hpp"
+#include "item_comparator.hpp"
 
 namespace cppmodel
 {
@@ -46,6 +47,7 @@ namespace cppmodel
             int getMaxIndex();
             void displayAt(unsigned int ix);
             void displayAll();
+            bool &indexComparator(const ItemTemperature &i1,const ItemTemperature &i2);
             ListeTemperature &setView(Views mode);
             ListeTemperature &setOrder(Directions direction);
             ListeTemperature &sortByIndex();
@@ -58,7 +60,7 @@ namespace cppmodel
         private:
             Directions order;
             Views view;
-            VectorItem itemList;
+            VectorItem _iV;
             VectorItem filteredList;
     };
 

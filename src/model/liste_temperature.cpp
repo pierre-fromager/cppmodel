@@ -4,8 +4,6 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
-#include <chrono>
-#include <tuple>
 #include "liste_temperature.hpp"
 
 using namespace cppmodel;
@@ -36,10 +34,21 @@ ListeTemperature::~ListeTemperature()
 //
 void ListeTemperature::resetAll()
 {
-  itemList.clear();
-  itemList.resize(0);
+  _iV.clear();
+  _iV.resize(0);
   filteredList.clear();
   filteredList.resize(0);
+}
+
+//
+// @brief maximum index
+//
+// @return int
+//
+int ListeTemperature::getMaxIndex()
+{
+  const auto max = std::max_element(_iV.begin(), _iV.end(), ItemIndexComparator(true));
+  return max->index;
 }
 
 //
@@ -49,12 +58,7 @@ void ListeTemperature::resetAll()
 //
 int ListeTemperature::getMinValue()
 {
-  const auto min = std::min_element(
-      itemList.begin(),
-      itemList.end(),
-      [](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return i1.value < i2.value;
-      });
+  const auto min = std::min_element(_iV.begin(), _iV.end(), ItemValueComparator(true));
   return min->value;
 }
 
@@ -65,12 +69,7 @@ int ListeTemperature::getMinValue()
 //
 int ListeTemperature::getMinPort()
 {
-  const auto min = std::min_element(
-      itemList.begin(),
-      itemList.end(),
-      [](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return i1.port < i2.port;
-      });
+  const auto min = std::min_element(_iV.begin(), _iV.end(), ItemPortComparator(true));
   return min->port;
 }
 
@@ -81,12 +80,7 @@ int ListeTemperature::getMinPort()
 //
 int ListeTemperature::getMinIndex()
 {
-  const auto min = std::min_element(
-      itemList.begin(),
-      itemList.end(),
-      [](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return i1.index < i2.index;
-      });
+  const auto min = std::min_element(_iV.begin(), _iV.end(), ItemIndexComparator(true));
   return min->index;
 }
 
@@ -97,12 +91,7 @@ int ListeTemperature::getMinIndex()
 //
 int ListeTemperature::getMaxValue()
 {
-  const auto max = std::max_element(
-      itemList.begin(),
-      itemList.end(),
-      [](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return i1.value < i2.value;
-      });
+  const auto max = std::max_element(_iV.begin(), _iV.end(), ItemValueComparator(true));
   return max->value;
 }
 
@@ -113,29 +102,8 @@ int ListeTemperature::getMaxValue()
 //
 int ListeTemperature::getMaxPort()
 {
-  const auto max = std::max_element(
-      itemList.begin(),
-      itemList.end(),
-      [](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return i1.port < i2.port;
-      });
+  const auto max = std::max_element(_iV.begin(), _iV.end(), ItemPortComparator(true));
   return max->port;
-}
-
-//
-// @brief maximum index
-//
-// @return int
-//
-int ListeTemperature::getMaxIndex()
-{
-  const auto max = std::max_element(
-      itemList.begin(),
-      itemList.end(),
-      [](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return i1.index < i2.index;
-      });
-  return max->index;
 }
 
 //
@@ -145,7 +113,7 @@ int ListeTemperature::getMaxIndex()
 //
 VectorItem ListeTemperature::items()
 {
-  return (view == MAIN) ? itemList : filteredList;
+  return (view == MAIN) ? _iV : filteredList;
 }
 
 //
@@ -156,10 +124,10 @@ VectorItem ListeTemperature::items()
 //
 ItemTemperature ListeTemperature::itemAt(unsigned int ix)
 {
-  const unsigned int size = itemList.size();
+  const unsigned int size = _iV.size();
   if (size > ix)
     ix = size;
-  return itemList.at(ix);
+  return _iV.at(ix);
 }
 
 //
@@ -171,9 +139,9 @@ ItemTemperature ListeTemperature::itemAt(unsigned int ix)
 //
 bool ListeTemperature::removeAt(const unsigned int ix)
 {
-  if (itemList.size() < ix)
+  if (_iV.size() < ix)
     return false;
-  itemList.erase(itemList.begin() + ix);
+  _iV.erase(_iV.begin() + ix);
   return true;
 }
 
@@ -184,7 +152,7 @@ bool ListeTemperature::removeAt(const unsigned int ix)
 //
 int ListeTemperature::getSize()
 {
-  return itemList.size();
+  return _iV.size();
 }
 
 //
@@ -194,7 +162,7 @@ int ListeTemperature::getSize()
 //
 void ListeTemperature::appendItem(ItemTemperature item)
 {
-  itemList.push_back(item);
+  _iV.push_back(item);
 }
 
 //
@@ -207,12 +175,12 @@ void ListeTemperature::appendItem(ItemTemperature item)
 //
 bool ListeTemperature::setItemAt(unsigned int ix, ItemTemperature item)
 {
-  if (itemList.size() < ix)
+  if (_iV.size() < ix)
   {
     return false;
   }
-  itemList[ix] = item;
-  //itemList.insert(itemList.begin() + ix, item);
+  _iV[ix] = item;
+  //_iV.insert(_iV.begin() + ix, item);
   return true;
 }
 
@@ -275,13 +243,8 @@ ListeTemperature &ListeTemperature::setView(Views mode)
 //
 ListeTemperature &ListeTemperature::sortByIndex()
 {
-  const bool isAsc = (order == ASC);
-  std::sort(
-      itemList.begin(),
-      itemList.end(),
-      [isAsc](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return (isAsc) ? (i1.index < i2.index) : (i1.index > i2.index);
-      });
+
+  std::sort(_iV.begin(), _iV.end(), ItemIndexComparator(order == ASC));
   return *this;
 }
 
@@ -291,13 +254,7 @@ ListeTemperature &ListeTemperature::sortByIndex()
 //
 ListeTemperature &ListeTemperature::sortByPort()
 {
-  const bool isAsc = (order == ASC);
-  std::sort(
-      itemList.begin(),
-      itemList.end(),
-      [isAsc](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return (isAsc) ? (i1.port < i2.port) : (i1.port > i2.port);
-      });
+  std::sort(_iV.begin(), _iV.end(), ItemPortComparator(order == ASC));
   return *this;
 }
 
@@ -307,13 +264,7 @@ ListeTemperature &ListeTemperature::sortByPort()
 //
 ListeTemperature &ListeTemperature::sortByValue()
 {
-  const bool isAsc = (order == ASC);
-  std::sort(
-      itemList.begin(),
-      itemList.end(),
-      [isAsc](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return (isAsc) ? (i1.value < i2.value) : (i1.value > i2.value);
-      });
+  std::sort(_iV.begin(), _iV.end(), ItemValueComparator(order == ASC));
   return *this;
 }
 
@@ -323,15 +274,7 @@ ListeTemperature &ListeTemperature::sortByValue()
 //
 ListeTemperature &ListeTemperature::sortByPortAndValue()
 {
-  const bool isAsc = (order == ASC);
-  std::sort(
-      itemList.begin(),
-      itemList.end(),
-      [isAsc](const ItemTemperature &i1, const ItemTemperature &i2) {
-        return (isAsc)
-                   ? std::tie(i1.port, i1.value) < std::tie(i2.port, i2.value)
-                   : std::tie(i1.port, i1.value) > std::tie(i2.port, i2.value);
-      });
+  std::sort(_iV.begin(), _iV.end(), ItemPortValueComparator(order == ASC));
   return *this;
 }
 
@@ -343,10 +286,10 @@ ListeTemperature &ListeTemperature::sortByPortAndValue()
 ListeTemperature &ListeTemperature::filterByPort(int portFilter)
 {
   filteredList.clear();
-  filteredList.resize(itemList.size());
+  filteredList.resize(_iV.size());
   std::copy_if(
-      itemList.begin(),
-      itemList.end(),
+      _iV.begin(),
+      _iV.end(),
       std::back_inserter(filteredList),
       [portFilter](const ItemTemperature &i) { return i.port == portFilter; });
   return *this;
@@ -360,10 +303,10 @@ ListeTemperature &ListeTemperature::filterByPort(int portFilter)
 ListeTemperature &ListeTemperature::filterByValue(int valueFilter)
 {
   filteredList.clear();
-  filteredList.resize(itemList.size());
+  filteredList.resize(_iV.size());
   std::copy_if(
-      itemList.begin(),
-      itemList.end(),
+      _iV.begin(),
+      _iV.end(),
       std::back_inserter(filteredList),
       [valueFilter](const ItemTemperature &i) { return i.value == valueFilter; });
   return *this;

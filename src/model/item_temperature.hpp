@@ -8,18 +8,19 @@
 namespace cppmodel
 {
 
-    //
-    // @brief item structure
-    //
-    //
-    struct ItemTemperature
-    {
-        int index;
-        int port;
-        std::string timestamp;
-        std::string type;
-        int value;
-    };
+//
+// @brief item structure
+//
+//
+struct ItemTemperature
+{
+    int index;
+    int port;
+    std::string timestamp;
+    std::string type;
+    int value;
+};
 
-} // namespace cppmodel
+}; // namespace cppmodel
+
 #endif

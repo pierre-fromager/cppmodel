@@ -10,6 +10,17 @@
 namespace cppmodel
 {
 
+template <typename TFunc>
+void ProcessArguments(const TFunc& process)
+{}
+
+template <typename TFunc, typename HEAD, typename ... TAIL>
+void ProcessArguments(const TFunc& process, const HEAD &head, const TAIL &... tail)
+{
+  process(head);
+  ProcessArguments(process, tail...);
+}
+
 //
 // @brief ListeTemplate Class
 //
