@@ -1,5 +1,6 @@
 
 #include "demo_generic.hpp"
+#include <iterator>
 
 using namespace cppmodel;
 
@@ -80,6 +81,9 @@ void DemoGeneric::populateList()
     }
     println("> Liste size : " + std::to_string(m_list.getSize()));
     m_profiler.elapse();
+    const std::string filename = "list.csv";
+    save(filename);
+    //load(filename);
 }
 
 //
@@ -320,4 +324,38 @@ void DemoGeneric::displayAll()
     {
         displayAt(ix);
     }
+}
+
+//
+// @brief load items from file to list
+//
+//
+//template <typename Item, typename VectorItem>
+void DemoGeneric::load(std::string filename)
+{
+    m_list.items().clear();
+    std::ifstream myfile;
+    myfile.open(filename);
+    const std::string sep = ";";
+    std::string line;
+    if (myfile.is_open())
+    {
+        while (getline(myfile, line))
+        {
+            std::cout << line << std::endl;
+        }
+        myfile.close();
+    }
+}
+
+//
+// @brief save list to csv file ; separator
+//
+// @return int
+//
+void DemoGeneric::save(std::string filename)
+{
+    m_profiler.mark("save to file generic");
+    m_list.save(filename);
+    m_profiler.elapse();
 }

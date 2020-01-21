@@ -7,6 +7,9 @@
 #include <algorithm>
 #include <functional>
 #include <thread>
+#include <iostream>
+#include <fstream>
+#include <iterator>
 
 namespace cppmodel
 {
@@ -49,8 +52,9 @@ public:
     ListeTemplate &setFilterComparator(const std::function<bool(const Item &i1)> &comparator);
     ListeTemplate &sortByComparator();
     ListeTemplate &filterByComparator();
+    void save(std::string filename);
 
-private:
+    //private:
     std::function<bool(Item, Item)> sortComparator;
     std::function<bool(Item)> filterComparator;
     Directions order;
@@ -310,6 +314,20 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::filterByCompar
     _iVf.clear();
     std::copy_if(_iV.begin(), _iV.end(), std::back_inserter(_iVf), filterComparator);
     return *this;
+}
+
+//
+// @brief save list to csv file ; separator
+//
+// @return int
+//
+template <typename Item, typename VectorItem>
+void ListeTemplate<Item, VectorItem>::save(std::string filename)
+{
+    std::ofstream s(filename, std::ios::in | std::ios::app | std::ios::binary);
+    setView(ListeTemplate<ItemTemperature>::MAIN);
+    std::copy(_iV.begin(),_iV.end(),std::ostream_iterator<Item>(s, "\n"));
+    s.close();
 }
 
 } // namespace cppmodel

@@ -32,10 +32,14 @@ namespace cppmodel
             void filterItems();
             void displayAt(int ix);
             void displayAll();
+            void load(std::string filename);
+            void save(std::string filename);
             Profile m_profiler;
             ItemTemperature m_item;
             ListeTemplate<ItemTemperature> m_list;
     };
+
+    
 }
 
 #endif
