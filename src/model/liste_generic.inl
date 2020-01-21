@@ -215,40 +215,6 @@ bool ListeTemplate<Item, VectorItem>::setItemAt(int ix, Item item)
     return true;
 }
 
-/*
-//
-// @brief display item at position
-//
-//
-template <typename Item, typename VectorItem>
-void ListeTemplate<Item, VectorItem>::displayAt(int ix)
-{
-    const Item item = items().at(ix);
-    const std::string separator = "-------------------------";
-    std::cout << separator << std::endl;
-    std::cout << "- index " << item.index << std::endl;
-    std::cout << "- port " << item.port << std::endl;
-    std::cout << "- timestamp " << item.timestamp << std::endl;
-    std::cout << "- type " << item.type << std::endl;
-    std::cout << "- value " << item.value << std::endl;
-    std::cout << separator << std::endl;
-    std::cout << std::endl;
-}
-
-//
-// @brief display all list items
-//
-//
-template <typename Item, typename VectorItem>
-void ListeTemplate<Item, VectorItem>::displayAll()
-{
-    const int max = items().size();
-    for (int ix = 0; ix < max; ix++)
-    {
-        displayAt(ix);
-    }
-}*/
-
 //
 // @brief set sort Directions
 //
