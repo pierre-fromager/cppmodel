@@ -42,18 +42,16 @@ public:
     int getSize();
     auto getMin();
     auto getMax();
-    void displayAt(int ix);
-    void displayAll();
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
     ListeTemplate &setSortComparator(const std::function<bool(const Item &i1, const Item &i2)> &comparator);
+    ListeTemplate &setFilterComparator(const std::function<bool(const Item &i1)> &comparator);
     ListeTemplate &sortByComparator();
-    ListeTemplate &filterByPort(int portFilter);
-    ListeTemplate &filterByValue(int valueFilter);
+    ListeTemplate &filterByComparator();
 
 private:
     std::function<bool(Item, Item)> sortComparator;
-    //std::function<bool(Item i1, Item i2) &filterComparator();
+    std::function<bool(Item)> filterComparator;
     Directions order;
     Views view;
     VectorItem _iV;  // MAIN STACK
@@ -213,10 +211,11 @@ bool ListeTemplate<Item, VectorItem>::setItemAt(int ix, Item item)
         return false;
     }
     _iV[ix] = item;
-    //_iV.insert(_iV.begin() + ix, item);
+    //_iV.insert(_iV.begin() + ix, item); // may be faster
     return true;
 }
 
+/*
 //
 // @brief display item at position
 //
@@ -248,7 +247,7 @@ void ListeTemplate<Item, VectorItem>::displayAll()
     {
         displayAt(ix);
     }
-}
+}*/
 
 //
 // @brief set sort Directions
@@ -289,7 +288,7 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::sortByComparat
 }
 
 //
-// @brief set lambda comparator
+// @brief set lambda sort bynary comparator
 //
 // @tparam Item
 // @tparam VectorItem
@@ -305,38 +304,33 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setSortCompara
 }
 
 //
-// @brief copy filtered items by port to the filtered list
+// @brief set lambda filter unary comparator
 //
-// @param portNumber
+// @tparam Item
+// @tparam VectorItem
+// @param comparator
+// @return ListeTemplate<Item, VectorItem>&
 //
 template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::filterByPort(int portFilter)
+ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::setFilterComparator(
+    const std::function<bool(const Item &i1)> &comparator)
 {
-    _iVf.clear();
-    _iVf.resize(_iV.size());
-    std::copy_if(
-        _iV.begin(),
-        _iV.end(),
-        std::back_inserter(_iVf),
-        [portFilter](const Item &i) { return i.port == portFilter; });
+    filterComparator = comparator;
     return *this;
 }
 
 //
-// @brief copy filtered items by value to the filtered list
+// @brief filter by lambda comparator
 //
-// @param valueFilter
+// @tparam Item
+// @tparam VectorItem
+// @return ListeTemplate<Item, VectorItem>&
 //
 template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::filterByValue(int valueFilter)
+ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::filterByComparator()
 {
     _iVf.clear();
-    _iVf.resize(_iV.size());
-    std::copy_if(
-        _iV.begin(),
-        _iV.end(),
-        std::back_inserter(_iVf),
-        [valueFilter](const Item &i) { return i.value == valueFilter; });
+    std::copy_if(_iV.begin(), _iV.end(), std::back_inserter(_iVf), filterComparator);
     return *this;
 }
 

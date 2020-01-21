@@ -30,6 +30,8 @@ namespace cppmodel
             void minima();
             void maxima();
             void filterItems();
+            void displayAt(int ix);
+            void displayAll();
             Profile m_profiler;
             ItemTemperature m_item;
             ListeTemplate<ItemTemperature> m_list;

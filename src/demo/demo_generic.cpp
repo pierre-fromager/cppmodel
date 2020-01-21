@@ -113,8 +113,8 @@ void DemoGeneric::sortByIndex()
                 const ItemTemperature &i1, const ItemTemperature &i2) {
                 return (i1.index > i2.index);
             })
-        .sortByComparator()
-        .displayAt(0);
+        .sortByComparator();
+    displayAt(0);
     m_profiler.elapse();
 }
 
@@ -133,8 +133,8 @@ void DemoGeneric::sortByPort()
                 const ItemTemperature &i1, const ItemTemperature &i2) {
                 return (i1.port > i2.port);
             })
-        .sortByComparator()
-        .displayAt(0);
+        .sortByComparator();
+    displayAt(0);
     m_profiler.elapse();
 }
 
@@ -153,8 +153,8 @@ void DemoGeneric::sortByValue()
                 const ItemTemperature &i1, const ItemTemperature &i2) {
                 return (i1.value > i2.value);
             })
-        .sortByComparator()
-        .displayAt(0);
+        .sortByComparator();
+    displayAt(0);
     m_profiler.elapse();
 }
 
@@ -173,8 +173,8 @@ void DemoGeneric::sortByPortValue()
                 const ItemTemperature &i1, const ItemTemperature &i2) {
                 return std::tie(i1.port, i1.value) > std::tie(i2.port, i2.value);
             })
-        .sortByComparator()
-        .displayAt(0);
+        .sortByComparator();
+    displayAt(0);
     m_profiler.elapse();
 }
 
@@ -243,17 +243,70 @@ void DemoGeneric::filterItems()
     m_profiler.mark("filters generic");
     m_list
         .setView(ListeTemplate<ItemTemperature>::MAIN)
-        .filterByValue(0)
+        .setFilterComparator(
+            [](const ItemTemperature &i) {
+                return i.index == 0;
+            })
+        .filterByComparator()
+        .setView(ListeTemplate<ItemTemperature>::FILTERED);
+    const std::string strCountIndex = std::to_string(
+        m_list.items().size());
+    println("count filtered index 0 : " + strCountIndex);
+
+    m_list
+        .setView(ListeTemplate<ItemTemperature>::MAIN)
+        .setFilterComparator(
+            [](const ItemTemperature &i) {
+                return i.value == 0;
+            })
+        .filterByComparator()
         .setView(ListeTemplate<ItemTemperature>::FILTERED);
     const std::string strCountValues = std::to_string(
         m_list.items().size());
     println("count filtered values 0 : " + strCountValues);
+
     m_list
         .setView(ListeTemplate<ItemTemperature>::MAIN)
-        .filterByPort(0)
+        .setFilterComparator(
+            [](const ItemTemperature &i) {
+                return i.port == 0;
+            })
+        .filterByComparator()
         .setView(ListeTemplate<ItemTemperature>::FILTERED);
     const std::string strCountPorts = std::to_string(m_list.items().size());
     println("count filteres ports 0 : " + strCountPorts);
     m_list.setView(ListeTemplate<ItemTemperature>::MAIN);
     m_profiler.elapse();
+}
+
+//
+// @brief display item at position
+//
+//
+void DemoGeneric::displayAt(int ix)
+{
+    const ItemTemperature item = m_list.items().at(ix);
+    const std::string separator = "-------------------------";
+    std::cout << separator << std::endl;
+    std::cout << "- index " << item.index << std::endl;
+    std::cout << "- port " << item.port << std::endl;
+    std::cout << "- timestamp " << item.timestamp << std::endl;
+    std::cout << "- type " << item.type << std::endl;
+    std::cout << "- value " << item.value << std::endl;
+    std::cout << separator << std::endl;
+    std::cout << std::endl;
+}
+
+//
+// @brief display all list items
+//
+//
+//template <typename Item, typename VectorItem>
+void DemoGeneric::displayAll()
+{
+    const int max = m_list.items().size();
+    for (int ix = 0; ix < max; ix++)
+    {
+        displayAt(ix);
+    }
 }
