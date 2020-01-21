@@ -241,6 +241,7 @@ void DemoGeneric::maxima()
 void DemoGeneric::filterItems()
 {
     m_profiler.mark("filters generic");
+
     m_list
         .setView(ListeTemplate<ItemTemperature>::MAIN)
         .setFilterComparator(
@@ -274,8 +275,18 @@ void DemoGeneric::filterItems()
         .filterByComparator()
         .setView(ListeTemplate<ItemTemperature>::FILTERED);
     const std::string strCountPorts = std::to_string(m_list.items().size());
-    println("count filteres ports 0 : " + strCountPorts);
+    println("count filtered ports 0 : " + strCountPorts);
     m_list.setView(ListeTemplate<ItemTemperature>::MAIN);
+
+    m_list
+        .setView(ListeTemplate<ItemTemperature>::MAIN)
+        .setFilterComparator(
+            [](const ItemTemperature &i) {
+                return i.port == 0 && i.value > 10 && i.value < 50;
+            });
+    const std::string strCountMultiCrit = std::to_string(m_list.countFiltered());
+    println("count ports 0 and value interval ]10..50[ : " + strCountMultiCrit);
+
     m_profiler.elapse();
 }
 

@@ -42,6 +42,7 @@ public:
     int getSize();
     auto getMin();
     auto getMax();
+    int countFiltered();
     ListeTemplate &setView(Views mode);
     ListeTemplate &setOrder(Directions direction);
     ListeTemplate &setSortComparator(const std::function<bool(const Item &i1, const Item &i2)> &comparator);
@@ -113,6 +114,17 @@ template <typename Item, typename VectorItem>
 auto ListeTemplate<Item, VectorItem>::getMax()
 {
     return std::max_element(_iV.begin(), _iV.end(), sortComparator);
+}
+
+//
+// @brief count main stack items matching filter lambda
+//
+// @return int
+//
+template <typename Item, typename VectorItem>
+int ListeTemplate<Item, VectorItem>::countFiltered()
+{
+    return std::count_if(_iV.begin(), _iV.end(), filterComparator);
 }
 
 //
