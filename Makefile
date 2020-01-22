@@ -14,3 +14,7 @@ $(TARGET): $(OBJECTS)
 .PHONY: clean
 clean:
 	rm -f $(TARGET) $(OBJECTS)
+
+.PHONY: check
+check:
+	cppcheck --enable=all src/
