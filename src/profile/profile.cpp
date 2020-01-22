@@ -7,7 +7,7 @@ using namespace cppmodel;
 // @brief Construct a new Profile:: Profile object
 //
 //
-Profile::Profile()
+Profile::Profile():in(0),mem_in({0,0}),mem_out({0,0})
 {
 }
 

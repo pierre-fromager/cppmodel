@@ -21,7 +21,7 @@ DemoGeneric::DemoGeneric(Profile &profiler, ItemTemperature &item, ListeTemplate
 //
 // @param msg
 //
-void DemoGeneric::println(std::string msg)
+void DemoGeneric::println(const std::string &msg)
 {
     std::cout << msg << std::endl;
 }
@@ -31,7 +31,7 @@ void DemoGeneric::println(std::string msg)
 //
 // @param msg
 //
-void DemoGeneric::printTitle(std::string msg)
+void DemoGeneric::printTitle(const std::string &msg)
 {
     std::cout << std::endl
               << terminal::ansi::bold << terminal::ansi::fg_red
@@ -50,6 +50,12 @@ void DemoGeneric::run()
     printTitle("> generate generic");
     populateList();
     appendItem();
+    printTitle("> file save generic");
+    save(filename);
+    printTitle("> file load generic");
+    load(filename);
+    printTitle("> display all generic");
+    displayAll();
     printTitle("> sorts generic");
     sortByIndex();
     sortByPort();
@@ -61,10 +67,6 @@ void DemoGeneric::run()
     maxima();
     printTitle("> filters generic");
     filterItems();
-    printTitle("> file save generic");
-    save(filename);
-    printTitle("> file load generic");
-    //load(filename);
 }
 
 //
@@ -325,6 +327,7 @@ void DemoGeneric::displayAll()
     for (int ix = 0; ix < max; ix++)
     {
         displayAt(ix);
+        std::cout << "\r\033[K";
     }
 }
 
@@ -332,22 +335,12 @@ void DemoGeneric::displayAll()
 // @brief load items from file to list
 //
 //
-//template <typename Item, typename VectorItem>
 void DemoGeneric::load(std::string filename)
 {
-    m_list.items().clear();
-    std::ifstream myfile;
-    myfile.open(filename);
-    const std::string sep = ";";
-    std::string line;
-    if (myfile.is_open())
-    {
-        while (getline(myfile, line))
-        {
-            std::cout << line << std::endl;
-        }
-        myfile.close();
-    }
+    m_profiler.mark("load from file generic");
+    m_list.load(filename);
+    println("> Liste size : " + std::to_string(m_list.getSize()));
+    m_profiler.elapse();
 }
 
 //

@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <iostream>
+#include <sstream>
 
 namespace cppmodel
 {
@@ -30,6 +31,10 @@ struct ItemTemperature
            << sep << item.value;
         return os;
     };
+    friend std::istream &operator>>(std::istream &is, ItemTemperature &item)
+    {
+        return is >> item.index >> item.port >> item.timestamp >> item.type >> item.value;
+    }
 };
 
 }; // namespace cppmodel

@@ -3,6 +3,12 @@
 #include "demo/demo_generic.hpp"
 #include "demo/demo_specific.hpp"
 #include "model/liste_generic.inl"
+#include <sstream>
+
+#include <iostream>
+#include <sstream>
+#include <algorithm>
+#include <string>
 
 using namespace cppmodel;
 

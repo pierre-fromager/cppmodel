@@ -53,8 +53,9 @@ public:
     ListeTemplate &sortByComparator();
     ListeTemplate &filterByComparator();
     void save(std::string filename);
+    void load(std::string filename);
 
-    //private:
+private:
     std::function<bool(Item, Item)> sortComparator;
     std::function<bool(Item)> filterComparator;
     Directions order;
@@ -326,9 +327,38 @@ template <typename Item, typename VectorItem>
 void ListeTemplate<Item, VectorItem>::save(std::string filename)
 {
     std::ofstream os(filename, std::ofstream::trunc);
-    setView(ListeTemplate<ItemTemperature>::MAIN);
     std::copy(_iV.begin(), _iV.end(), std::ostream_iterator<Item>(os, "\n"));
     os.close();
+}
+
+//
+// @brief save list to csv file
+// check item << operator for serialization
+//
+// @return int
+//
+template <typename Item, typename VectorItem>
+void ListeTemplate<Item, VectorItem>::load(std::string filename)
+{
+    _iV.clear();
+    std::ifstream is(filename);
+    const char sep = ';';
+    std::string line;
+    Item item;
+    if (is.is_open())
+    {
+        while (getline(is, line))
+        {
+            std::stringstream input;
+            input << line;
+            std::string s = input.str();
+            std::replace(s.begin(), s.end(), sep, ' ');
+            input.str(s);
+            input >> item;
+            appendItem(item);
+        }
+        is.close();
+    }
 }
 
 } // namespace cppmodel
