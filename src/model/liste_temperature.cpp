@@ -12,10 +12,8 @@ using namespace cppmodel;
 // @brief Construct a new Liste of temperature items
 //
 //
-ListeTemperature::ListeTemperature()
+ListeTemperature::ListeTemperature() : order(ASC), view(MAIN)
 {
-  order = ASC;
-  view = MAIN;
   resetAll();
 }
 

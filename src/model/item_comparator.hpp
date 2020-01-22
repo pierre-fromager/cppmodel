@@ -17,7 +17,7 @@ namespace cppmodel
 struct ItemComparator
 {
     bool _asc;
-    ItemComparator(bool asc) : _asc(asc) {}
+    explicit ItemComparator(bool asc) : _asc(asc) {};
 };
 
 //
@@ -26,7 +26,7 @@ struct ItemComparator
 //
 struct ItemIndexComparator : public ItemComparator
 {
-    ItemIndexComparator(bool asc) : ItemComparator(asc){};
+    explicit ItemIndexComparator(bool asc) : ItemComparator(asc){};
     bool operator()(const ItemTemperature &i1, const ItemTemperature &i2)
     {
         return (_asc) ? i1.index < i2.index : i1.index > i2.index;
@@ -39,7 +39,7 @@ struct ItemIndexComparator : public ItemComparator
 //
 struct ItemPortComparator : public ItemComparator
 {
-    ItemPortComparator(bool asc) : ItemComparator(asc){};
+    explicit ItemPortComparator(bool asc) : ItemComparator(asc){};
     bool operator()(const ItemTemperature &i1, const ItemTemperature &i2)
     {
         return (_asc) ? i1.port < i2.port : i1.port > i2.port;
@@ -52,7 +52,7 @@ struct ItemPortComparator : public ItemComparator
 //
 struct ItemValueComparator : public ItemComparator
 {
-    ItemValueComparator(bool asc) : ItemComparator(asc){};
+    explicit ItemValueComparator(bool asc) : ItemComparator(asc){};
     bool operator()(const ItemTemperature &i1, const ItemTemperature &i2)
     {
         return (_asc) ? i1.value < i2.value : i1.value > i2.value;
@@ -65,7 +65,7 @@ struct ItemValueComparator : public ItemComparator
 //
 struct ItemPortValueComparator : public ItemComparator
 {
-    ItemPortValueComparator(bool asc) : ItemComparator(asc){};
+    explicit ItemPortValueComparator(bool asc) : ItemComparator(asc){};
     bool operator()(const ItemTemperature &i1, const ItemTemperature &i2)
     {
         return (_asc)
