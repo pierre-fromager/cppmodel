@@ -46,6 +46,7 @@ void DemoGeneric::printTitle(std::string msg)
 //
 void DemoGeneric::run()
 {
+    const std::string filename = "list_generic.csv";
     printTitle("> generate generic");
     populateList();
     appendItem();
@@ -60,6 +61,10 @@ void DemoGeneric::run()
     maxima();
     printTitle("> filters generic");
     filterItems();
+    printTitle("> file save generic");
+    save(filename);
+    printTitle("> file load generic");
+    //load(filename);
 }
 
 //
@@ -81,9 +86,6 @@ void DemoGeneric::populateList()
     }
     println("> Liste size : " + std::to_string(m_list.getSize()));
     m_profiler.elapse();
-    const std::string filename = "list.csv";
-    save(filename);
-    //load(filename);
 }
 
 //

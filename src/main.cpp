@@ -14,7 +14,6 @@ using namespace cppmodel;
 int main()
 {
     
-
     Profile profiler;
     ItemTemperature item;
 

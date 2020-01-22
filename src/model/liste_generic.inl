@@ -317,17 +317,18 @@ ListeTemplate<Item, VectorItem> &ListeTemplate<Item, VectorItem>::filterByCompar
 }
 
 //
-// @brief save list to csv file ; separator
+// @brief save list to csv file
+// check item << operator for serialization
 //
 // @return int
 //
 template <typename Item, typename VectorItem>
 void ListeTemplate<Item, VectorItem>::save(std::string filename)
 {
-    std::ofstream s(filename, std::ios::in | std::ios::app | std::ios::binary);
+    std::ofstream os(filename, std::ofstream::trunc);
     setView(ListeTemplate<ItemTemperature>::MAIN);
-    std::copy(_iV.begin(),_iV.end(),std::ostream_iterator<Item>(s, "\n"));
-    s.close();
+    std::copy(_iV.begin(), _iV.end(), std::ostream_iterator<Item>(os, "\n"));
+    os.close();
 }
 
 } // namespace cppmodel
