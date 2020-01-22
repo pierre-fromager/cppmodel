@@ -192,13 +192,19 @@ void ListeTemperature::displayAt(unsigned int ix)
 {
   const ItemTemperature item = items().at(ix);
   const std::string separator = "-------------------------";
-  std::cout << separator << std::endl;
-  std::cout << "- index " << item.index << std::endl;
-  std::cout << "- port " << item.port << std::endl;
-  std::cout << "- timestamp " << item.timestamp << std::endl;
-  std::cout << "- type " << item.type << std::endl;
-  std::cout << "- value " << item.value << std::endl;
-  std::cout << separator << std::endl;
+
+  std::cout << "\t" << separator << std::endl;
+  std::cout << "\t"
+            << "- index " << item.index << std::endl;
+  std::cout << "\t"
+            << "- port " << item.port << std::endl;
+  std::cout << "\t"
+            << "- timestamp " << item.timestamp << std::endl;
+  std::cout << "\t"
+            << "- type " << item.type << std::endl;
+  std::cout << "\t"
+            << "- value " << item.value << std::endl;
+  std::cout << "\t" << separator << std::endl;
   std::cout << std::endl;
 }
 

@@ -18,8 +18,8 @@ namespace cppmodel
             void run();
 
         private:
-            void println(std::string msg);
-            void printTitle(std::string msg);
+            void println(const std::string &msg);
+            void printTitle(const std::string &msg);
             void populateList();
             void appendItem();
             void sortByIndex();

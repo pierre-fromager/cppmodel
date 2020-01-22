@@ -69,10 +69,8 @@ private:
 //
 //
 template <typename Item, typename VectorItem>
-ListeTemplate<Item, VectorItem>::ListeTemplate()
+ListeTemplate<Item, VectorItem>::ListeTemplate() : order(ASC), view(MAIN)
 {
-    order = ASC;
-    view = MAIN;
     resetAll();
 }
 

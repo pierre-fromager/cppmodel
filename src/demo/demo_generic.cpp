@@ -33,8 +33,7 @@ void DemoGeneric::println(const std::string &msg)
 //
 void DemoGeneric::printTitle(const std::string &msg)
 {
-    std::cout << std::endl
-              << terminal::ansi::bold << terminal::ansi::fg_red
+    std::cout << terminal::ansi::bold << terminal::ansi::fg_red
               << msg
               << terminal::ansi::reset << std::endl;
 }
@@ -305,15 +304,15 @@ void DemoGeneric::filterItems()
 void DemoGeneric::displayAt(int ix)
 {
     const ItemTemperature item = m_list.items().at(ix);
-    const std::string separator = "-------------------------";
-    std::cout << separator << std::endl;
-    std::cout << "- index " << item.index << std::endl;
-    std::cout << "- port " << item.port << std::endl;
-    std::cout << "- timestamp " << item.timestamp << std::endl;
-    std::cout << "- type " << item.type << std::endl;
-    std::cout << "- value " << item.value << std::endl;
-    std::cout << separator << std::endl;
-    std::cout << std::endl;
+    const std::string separator = "+------------------------";
+    std::cout << terminal::ansi::fg_white;
+    std::cout << "\t" << separator << std::endl;
+    std::cout << "\t" << "| index " << item.index << std::endl;
+    std::cout << "\t" << "| port " << item.port << std::endl;
+    std::cout << "\t" << "| timestamp " << item.timestamp << std::endl;
+    std::cout << "\t" << "| type " << item.type << std::endl;
+    std::cout << "\t" << "| value " << item.value << std::endl;
+    std::cout << "\t" << separator << terminal::ansi::reset << std::endl;
 }
 
 //
@@ -327,8 +326,8 @@ void DemoGeneric::displayAll()
     for (int ix = 0; ix < max +1; ix++)
     {
         displayAt(ix);
-        if (ix < max -1) {
-            std::cout << "\033[8A" << "\r";
+        if (ix < max) {
+            std::cout << "\033[7A" << "\r";
         }
     }
 }

@@ -56,7 +56,7 @@ void Profile::elapse()
     std::cout << "| Mem res "
               << " : " << mem_out.rss - mem_in.rss << memUnit
               << std::endl
-              << separator << std::endl
+              << separator << std::endl << std::endl
               << terminal::ansi::reset;
 }
 

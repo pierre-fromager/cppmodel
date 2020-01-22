@@ -20,7 +20,7 @@ DemoSpecific::DemoSpecific(Profile &profiler, ItemTemperature &item, ListeTemper
 //
 // @param msg
 //
-void DemoSpecific::println(std::string msg)
+void DemoSpecific::println(const std::string &msg)
 {
     std::cout << msg << std::endl;
 }
@@ -30,7 +30,7 @@ void DemoSpecific::println(std::string msg)
 //
 // @param msg
 //
-void DemoSpecific::printTitle(std::string msg)
+void DemoSpecific::printTitle(const std::string &msg)
 {
     std::cout << std::endl
               << terminal::ansi::bold << terminal::ansi::fg_red
