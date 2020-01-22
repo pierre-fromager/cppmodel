@@ -54,7 +54,7 @@ void DemoGeneric::run()
     save(filename);
     printTitle("> file load generic");
     load(filename);
-    printTitle("> display all generic");
+    printTitle("> display items generic");
     displayAll();
     printTitle("> sorts generic");
     sortByIndex();
@@ -317,17 +317,19 @@ void DemoGeneric::displayAt(int ix)
 }
 
 //
-// @brief display all list items
+// @brief display 20's first items
 //
 //
-//template <typename Item, typename VectorItem>
 void DemoGeneric::displayAll()
 {
-    const int max = m_list.items().size();
-    for (int ix = 0; ix < max; ix++)
+    println("> Display 20's first items");
+    const int max = 20;
+    for (int ix = 0; ix < max +1; ix++)
     {
         displayAt(ix);
-        std::cout << "\r\033[K";
+        if (ix < max -1) {
+            std::cout << "\033[8A" << "\r";
+        }
     }
 }
 
